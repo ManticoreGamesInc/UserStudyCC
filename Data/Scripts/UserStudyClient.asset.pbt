@@ -5,6 +5,17 @@ Assets {
   TextAsset {
     CustomParameters {
       Overrides {
+        Name: "cs:UserStudyAPI"
+        AssetReference {
+          Id: 4351186339395260028
+        }
+      }
+      Overrides {
+        Name: "cs:CameraParent"
+        ObjectReference {
+        }
+      }
+      Overrides {
         Name: "cs:Camera"
         ObjectReference {
         }

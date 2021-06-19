@@ -17,6 +17,16 @@ Objects {
   ParentId: 18019938618028456256
   ChildIds: 17728674430089621782
   ChildIds: 16161534720067561715
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:ObserverCount"
+      Int: 0
+    }
+    Overrides {
+      Name: "cs:ObserverCount:isrep"
+      Bool: true
+    }
+  }
   WantsNetworking: true
   Collidable_v2 {
     Value: "mc:ecollisionsetting:forceoff"
@@ -102,6 +112,12 @@ Objects {
       Name: "cs:Camera"
       ObjectReference {
         SelfId: 16161534720067561715
+      }
+    }
+    Overrides {
+      Name: "cs:CameraParent"
+      ObjectReference {
+        SelfId: 14954088171440346333
       }
     }
   }

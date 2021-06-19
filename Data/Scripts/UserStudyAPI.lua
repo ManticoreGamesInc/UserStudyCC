@@ -11,16 +11,22 @@ local ATTACHMENT_TEMPLATE = script:GetCustomProperty("AttachmentTemplate")
 local EVENT_STUDY_STARTED = "UserStudy_Started"
 local EVENT_STUDY_ENDED = "UserStudy_Ended"
 local EVENT_SUBJECT_CHANGED = "UserStudy_SubjectChanged"
+local EVENT_REDIRECT_BROADCAST = "UserStudy_Redirect"
 
 local BINDING_NEXT_SUBJECT = "ability_primary"
 local BINDING_PREV_SUBJECT = "ability_secondary"
 
-
+API.networkedObject = nil
 API.activeObservers = {}
 
 
+function API.RegisterNetworkedObject(obj)
+	API.networkedObject = obj
+end
+
+
 function API.BeginStudy(observer, arguments)
-	if API.IsStudying(observer) then
+	if API.IsObserver(observer) then
 		Chat.BroadcastMessage("Already studying.", {players = observer})
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
@@ -31,6 +37,9 @@ function API.BeginStudy(observer, arguments)
 		
 		-- Register in observers table
 		API.activeObservers[observer] = true
+		
+		-- Increase observer count
+		SetObserverCount(GetObserverCount() + 1)
 		
 		-- Enable study in the observer's own data
 		local data = GetStudyData(observer)
@@ -73,7 +82,7 @@ end
 
 
 function API.EndStudy(observer, arguments)
-	if API.IsStudying(observer) then
+	if API.IsObserver(observer) then
 		Chat.BroadcastMessage("Ending study.", {players = observer})
 		
 		-- Let other scripts and client know
@@ -82,6 +91,9 @@ function API.EndStudy(observer, arguments)
 		
 		-- Clear from observers table
 		API.activeObservers[observer] = nil
+		
+		-- Decrease observer count
+		SetObserverCount(GetObserverCount() - 1)
 		
 		-- Disable study in the observer's own data
 		local data = GetStudyData(observer)
@@ -103,7 +115,7 @@ function API.EndStudy(observer, arguments)
 end
 
 
-function API.IsStudying(observer)
+function API.IsObserver(observer)
 	local data = GetStudyData(observer)
 	return data.isStudying
 end
@@ -239,6 +251,45 @@ end
 
 Game.playerJoinedEvent:Connect(OnPlayerJoined)
 Game.playerLeftEvent:Connect(OnPlayerLeft)
+
+
+-- Client
+function API.BroadcastToObservers(eventName, ...)
+	local subject = Game.GetLocalPlayer()
+	if GetObserverCount() > 0 then
+		Events.BroadcastToServer(EVENT_REDIRECT_BROADCAST, eventName, unpack(arg))
+	end
+end
+
+-- Server
+function OnRedirectEvent(subject, eventName, ...)
+	if API.IsObserver(subject) then return end
+	
+	for observer,_ in pairs(API.activeObservers) do
+		local data = API.GetStudyData(observer)
+		if data.subject == subject and Object.IsValid(subject) then
+			Events.BroadcastToPlayer(observer, eventName, unpack(arg))
+		end
+	end
+end
+
+Events.ConnectForPlayer(EVENT_REDIRECT_BROADCAST, OnRedirectEvent)
+
+
+-- Client / Server
+function GetObserverCount()
+	if API.networkedObject then
+		return API.networkedObject:GetCustomProperty("ObserverCount")
+	end
+	return 0
+end
+
+-- Server
+function SetObserverCount(value)
+	if API.networkedObject then
+		API.networkedObject:SetNetworkedCustomProperty("ObserverCount", value)
+	end
+end
 
 
 return API

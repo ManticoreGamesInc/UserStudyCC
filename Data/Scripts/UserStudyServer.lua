@@ -7,6 +7,8 @@
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local CAMERA_PARENT = script:GetCustomProperty("CameraParent"):WaitForObject()
 
+API.RegisterNetworkedObject(CAMERA_PARENT)
+
 
 function OnStudyStarted(observer)
 	--

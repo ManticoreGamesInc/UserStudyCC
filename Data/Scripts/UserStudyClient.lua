@@ -4,8 +4,13 @@
 	by: standardcombo
 --]]
 
+local API = require( script:GetCustomProperty("UserStudyAPI") )
+local CAMERA_PARENT = script:GetCustomProperty("CameraParent"):WaitForObject()
 local CAMERA = script:GetCustomProperty("Camera"):WaitForObject()
+
 local PLAYER = Game.GetLocalPlayer()
+
+API.RegisterNetworkedObject(CAMERA_PARENT)
 
 
 function OnStudyStarted()
