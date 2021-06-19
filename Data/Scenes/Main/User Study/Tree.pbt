@@ -64,10 +64,10 @@ Objects {
   Camera {
     FreeControl: true
     InitialDistance: 400
-    MinDistance: 300
-    MaxDistance: 600
+    IsDistanceAdjustable: true
+    MinDistance: 200
+    MaxDistance: 1600
     PositionOffset {
-      Y: 60
     }
     RotationOffset {
     }
