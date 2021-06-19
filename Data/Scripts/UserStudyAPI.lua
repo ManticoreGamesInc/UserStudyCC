@@ -6,6 +6,13 @@
 
 local API = {}
 
+local ATTACHMENT_TEMPLATE = script:GetCustomProperty("AttachmentTemplate")
+
+local EVENT_STUDY_STARTED = "UserStudy_Started"
+local EVENT_STUDY_ENDED = "UserStudy_Ended"
+local EVENT_SUBJECT_CHANGED = "UserStudy_SubjectChanged"
+
+
 API.activeObservers = {}
 
 
@@ -15,13 +22,24 @@ function API.BeginStudy(observer, arguments)
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
 		
+		Events.Broadcast(EVENT_STUDY_STARTED, observer)
+		Events.BroadcastToPlayer(observer, EVENT_STUDY_STARTED)
+		
 		API.activeObservers[observer] = true
 		
 		local data = GetStudyData(observer)
 		data.isStudying = true
 		data.bindingPressedListener = observer.bindingPressedEvent:Connect(OnBindingPressed)
 		
-		observer:Despawn()
+		if not Object.IsValid(data.attachmentObject) then
+			local pos = observer:GetWorldPosition()
+			local attachmentObject = World.SpawnAsset(ATTACHMENT_TEMPLATE, {position = pos})
+			data.attachmentObject = attachmentObject
+		end
+		observer:AttachToCoreObject(data.attachmentObject)
+		
+		observer.isVisible = false
+		observer.isCollidable = false
 		
 		if #arguments > 0 then
 			local subject = FindPlayerWithName(arguments[1])
@@ -47,6 +65,9 @@ function API.EndStudy(observer, arguments)
 	if API.IsStudying(observer) then
 		Chat.BroadcastMessage("Ending study.", {players = observer})
 		
+		Events.Broadcast(EVENT_STUDY_ENDED, observer)
+		Events.BroadcastToPlayer(observer, EVENT_STUDY_ENDED)
+		
 		API.activeObservers[observer] = nil
 		
 		local data = GetStudyData(observer)
@@ -54,7 +75,11 @@ function API.EndStudy(observer, arguments)
 		data.bindingPressedListener:Disconnect()
 		data.bindingPressedListener = nil
 		
+		observer:Detach()
+		
 		observer:Spawn()
+		observer.isVisible = true
+		observer.isCollidable = true
 	else
 		Chat.BroadcastMessage("Not currently studying.", {players = observer})
 	end
@@ -67,31 +92,14 @@ function API.IsStudying(observer)
 end
 
 
-function GetStudyData(observer)
-	if not observer.serverUserData.userStudy then
-		observer.serverUserData.userStudy = {}
-	end
-	return observer.serverUserData.userStudy
-end
-
-
-function OnBindingPressed(observer, action)
-	--print("Study action = " .. action)
-	
-	if action == "ability_extra_32" or action == "ability_extra_49" then
-		API.NextSubject(observer)
-	
-	elseif action == "ability_extra_30" or action == "ability_extra_48" then
-		API.PreviousSubject(observer)
-	end
-end
-
-
 function SetSubject(observer, subject)
 	Chat.BroadcastMessage("Observing " .. subject.name, {players = observer})
 	
 	local data = GetStudyData(observer)
 	data.subject = subject
+		
+	Events.Broadcast(EVENT_SUBJECT_CHANGED, observer, subject)
+	Events.BroadcastToPlayer(observer, EVENT_SUBJECT_CHANGED, subject)
 end
 
 
@@ -157,6 +165,26 @@ function API.PreviousSubject(observer)
 end
 
 
+function OnBindingPressed(observer, action)
+	--print("Study action = " .. action)
+	
+	if action == "ability_extra_32" or action == "ability_extra_49" then
+		API.NextSubject(observer)
+	
+	elseif action == "ability_extra_30" or action == "ability_extra_48" then
+		API.PreviousSubject(observer)
+	end
+end
+
+
+function GetStudyData(observer)
+	if not observer.serverUserData.userStudy then
+		observer.serverUserData.userStudy = {}
+	end
+	return observer.serverUserData.userStudy
+end
+
+
 function FindPlayerWithName(name)
 	for _,player in ipairs(Game.GetPlayers()) do
 		if player.name == name then
@@ -180,6 +208,8 @@ function OnPlayerLeft(player)
 	for observer,_ in pairs(API.activeObservers) do
 		local data = GetStudyData(observer)
 		if data.isStudying and data.subject == player then
+			data.attachmentObject:Detach()
+			
 			Task.Wait(0.5)
 			if not Object.IsValid(observer) then return end
 			

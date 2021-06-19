@@ -1,5 +1,5 @@
 Assets {
-  Id: 13125617499759010385
+  Id: 15479419207500979944
   Name: "UserStudyServer"
   PlatformAssetType: 3
   TextAsset {
@@ -8,6 +8,11 @@ Assets {
         Name: "cs:UserStudyAPI"
         AssetReference {
           Id: 4351186339395260028
+        }
+      }
+      Overrides {
+        Name: "cs:CameraParent"
+        ObjectReference {
         }
       }
     }
