@@ -12,6 +12,9 @@ local EVENT_STUDY_STARTED = "UserStudy_Started"
 local EVENT_STUDY_ENDED = "UserStudy_Ended"
 local EVENT_SUBJECT_CHANGED = "UserStudy_SubjectChanged"
 
+local BINDING_NEXT_SUBJECT = "ability_primary"
+local BINDING_PREV_SUBJECT = "ability_secondary"
+
 
 API.activeObservers = {}
 
@@ -22,15 +25,21 @@ function API.BeginStudy(observer, arguments)
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
 		
+		-- Let other scripts and client know
 		Events.Broadcast(EVENT_STUDY_STARTED, observer)
 		Events.BroadcastToPlayer(observer, EVENT_STUDY_STARTED)
 		
+		-- Register in observers table
 		API.activeObservers[observer] = true
 		
+		-- Enable study in the observer's own data
 		local data = GetStudyData(observer)
 		data.isStudying = true
+		
+		-- Connect action binding
 		data.bindingPressedListener = observer.bindingPressedEvent:Connect(OnBindingPressed)
 		
+		-- Attach observer
 		if not Object.IsValid(data.attachmentObject) then
 			local pos = observer:GetWorldPosition()
 			local attachmentObject = World.SpawnAsset(ATTACHMENT_TEMPLATE, {position = pos})
@@ -38,9 +47,11 @@ function API.BeginStudy(observer, arguments)
 		end
 		observer:AttachToCoreObject(data.attachmentObject)
 		
+		-- Disable observer
 		observer.isVisible = false
 		observer.isCollidable = false
 		
+		-- Additional command arguments
 		if #arguments > 0 then
 			local subject = FindPlayerWithName(arguments[1])
 			if subject then
@@ -65,19 +76,25 @@ function API.EndStudy(observer, arguments)
 	if API.IsStudying(observer) then
 		Chat.BroadcastMessage("Ending study.", {players = observer})
 		
+		-- Let other scripts and client know
 		Events.Broadcast(EVENT_STUDY_ENDED, observer)
 		Events.BroadcastToPlayer(observer, EVENT_STUDY_ENDED)
 		
+		-- Clear from observers table
 		API.activeObservers[observer] = nil
 		
+		-- Disable study in the observer's own data
 		local data = GetStudyData(observer)
 		data.isStudying = false
+		
+		-- Cleanup action binding
 		data.bindingPressedListener:Disconnect()
 		data.bindingPressedListener = nil
 		
+		-- Detach observer
 		observer:Detach()
 		
-		observer:Spawn()
+		-- Enable observer
 		observer.isVisible = true
 		observer.isCollidable = true
 	else
@@ -95,9 +112,11 @@ end
 function SetSubject(observer, subject)
 	Chat.BroadcastMessage("Observing " .. subject.name, {players = observer})
 	
+	-- Save a reference to the subject into the observer's data
 	local data = GetStudyData(observer)
 	data.subject = subject
-		
+	
+	-- Let other scripts and client know
 	Events.Broadcast(EVENT_SUBJECT_CHANGED, observer, subject)
 	Events.BroadcastToPlayer(observer, EVENT_SUBJECT_CHANGED, subject)
 end
@@ -168,10 +187,10 @@ end
 function OnBindingPressed(observer, action)
 	--print("Study action = " .. action)
 	
-	if action == "ability_extra_32" or action == "ability_extra_49" then
+	if action == BINDING_NEXT_SUBJECT then
 		API.NextSubject(observer)
 	
-	elseif action == "ability_extra_30" or action == "ability_extra_48" then
+	elseif action == BINDING_PREV_SUBJECT then
 		API.PreviousSubject(observer)
 	end
 end
