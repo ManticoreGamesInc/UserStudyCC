@@ -273,7 +273,9 @@ function OnRedirectEvent(subject, eventName, ...)
 	end
 end
 
-Events.ConnectForPlayer(EVENT_REDIRECT_BROADCAST, OnRedirectEvent)
+if Environment.IsServer() then
+	Events.ConnectForPlayer(EVENT_REDIRECT_BROADCAST, OnRedirectEvent)
+end
 
 
 -- Client / Server
