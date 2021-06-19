@@ -19,7 +19,7 @@ Objects {
   ChildIds: 14713340454944924967
   ChildIds: 10005074784157121906
   ChildIds: 14982843161775482339
-  ChildIds: 11356301239506192775
+  ChildIds: 18019938618028456256
   UnregisteredParameters {
   }
   Collidable_v2 {
@@ -35,8 +35,8 @@ Objects {
   }
 }
 Objects {
-  Id: 11356301239506192775
-  Name: "UserStudyChatCommands"
+  Id: 18019938618028456256
+  Name: "User Study"
   Transform {
     Location {
     }
@@ -61,10 +61,9 @@ Objects {
   EditorIndicatorVisibility {
     Value: "mc:eindicatorvisibility:visiblewhenselected"
   }
-  Script {
-    ScriptAsset {
-      Id: 6763465163649740429
-    }
+  Folder {
+    IsFilePartition: true
+    FilePartitionName: "User Study"
   }
 }
 Objects {

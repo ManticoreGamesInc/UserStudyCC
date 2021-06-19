@@ -1,6 +1,6 @@
 Assets {
-  Id: 6763465163649740429
-  Name: "UserStudyChatCommands"
+  Id: 13125617499759010385
+  Name: "UserStudyServer"
   PlatformAssetType: 3
   TextAsset {
     CustomParameters {
@@ -9,10 +9,6 @@ Assets {
         AssetReference {
           Id: 4351186339395260028
         }
-      }
-      Overrides {
-        Name: "cs:Admins"
-        String: "standardcombo, Bot1"
       }
     }
   }
