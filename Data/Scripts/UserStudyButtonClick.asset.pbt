@@ -10,6 +10,21 @@ Assets {
           Id: 4351186339395260028
         }
       }
+      Overrides {
+        Name: "cs:ClickSFX"
+        ObjectReference {
+        }
+      }
+      Overrides {
+        Name: "cs:SubjectCursor"
+        ObjectReference {
+        }
+      }
+      Overrides {
+        Name: "cs:ButtonFeedbackText"
+        ObjectReference {
+        }
+      }
     }
   }
   SerializationVersion: 89

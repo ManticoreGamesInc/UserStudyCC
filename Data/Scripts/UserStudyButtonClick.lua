@@ -5,28 +5,81 @@
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
+local CLICK_SFX = script:GetCustomProperty("ClickSFX"):WaitForObject()
+local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
+local BUTTON_FEEDBACK_TEXT = script:GetCustomProperty("ButtonFeedbackText"):WaitForObject()
 
 local buttons = {}
+local listeners = {}
 
-
+-- Observer
 function OnStudyStarted()
-	buttons = World.FindObjectsByType("UIButton")
+	--buttons = World.FindObjectsByType("UIButton")
 end
 
+-- Observer
 function OnStudyEnded()
-	for _,b in ipairs(buttons) do
+	--for _,b in ipairs(buttons) do
 		
+	--end
+end
+
+function OnButtonClicked(buttonName, buttonId)
+	CLICK_SFX:Play()
+	
+	local button = World.FindObjectById(buttonId)
+	if Object.IsValid(button) and button:IsA("UIButton") then
+		if not button.clientUserData.defaultColor then
+			button.clientUserData.defaultColor = button:GetButtonColor()
+		end
+		button:SetButtonColor(button:GetPressedColor())
+		Task.Wait(0.2)
+		if Object.IsValid(button) then
+			button:SetButtonColor(button.clientUserData.defaultColor)
+		end
+	else
+		ShowFeedbackText(buttonName)
+		Task.Wait(0.6)
+		HideFeedbackText()
 	end
 end
+Events.Connect("UserStudy_ButtonClicked", OnButtonClicked)
 
+function ShowFeedbackText(message)
+	BUTTON_FEEDBACK_TEXT.visibility = Visibility.INHERIT
+	BUTTON_FEEDBACK_TEXT.x = SUBJECT_CURSOR.x
+	BUTTON_FEEDBACK_TEXT.y = SUBJECT_CURSOR.y
+	BUTTON_FEEDBACK_TEXT.text = message
+end
+
+function HideFeedbackText()
+	BUTTON_FEEDBACK_TEXT.visibility = Visibility.FORCE_OFF
+end
+
+-- Subject
+function OnSubjectButtonClicked(button)
+	API.BroadcastToObservers("UserStudy_ButtonClicked", button.text, button.id)
+end
+-- Subject
 function OnLocalPlayerIsSubject(isSubject)
 	if isSubject then
-		print(Game.GetLocalPlayer().name .. " is now a subject")
+		buttons = World.FindObjectsByType("UIButton")
+		for _,b in ipairs(buttons) do
+			local eventListener = b.clickedEvent:Connect(OnSubjectButtonClicked)
+			table.insert(listeners, eventListener)
+		end
 	else
-		print(Game.GetLocalPlayer().name .. " is no longer a subject")
+		for _,l in ipairs(listeners) do
+			if l then
+				l:Disconnect()
+			end
+		end
+		listeners = {}
+		buttons = {}
 	end
 end
 
 Events.Connect("UserStudy_Started", OnStudyStarted)
 Events.Connect("UserStudy_Ended", OnStudyEnded)
 Events.Connect("UserStudy_LocalPlayerIsSubject", OnLocalPlayerIsSubject)
+
