@@ -16,6 +16,8 @@ Objects {
   }
   ParentId: 18019938618028456256
   ChildIds: 17728674430089621782
+  ChildIds: 14154566882113274370
+  ChildIds: 17255162268278439966
   ChildIds: 15225082131598690946
   UnregisteredParameters {
     Overrides {
@@ -160,13 +162,91 @@ Objects {
         Overrides {
           Name: "Visible"
           Enum {
-            Value: "mc:evisibilitysetting:forceon"
+            Value: "mc:evisibilitysetting:forceoff"
           }
         }
       }
     }
     TemplateAsset {
       Id: 15902721824905113374
+    }
+  }
+}
+Objects {
+  Id: 17255162268278439966
+  Name: "UserStudyButtonClick"
+  Transform {
+    Location {
+      Z: 200
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 14954088171440346333
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  CameraCollidable {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  EditorIndicatorVisibility {
+    Value: "mc:eindicatorvisibility:visiblewhenselected"
+  }
+  Script {
+    ScriptAsset {
+      Id: 17262374815295182989
+    }
+  }
+}
+Objects {
+  Id: 14154566882113274370
+  Name: "UserStudyMouseCursor"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 14954088171440346333
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:SubjectCursor"
+      ObjectReference {
+        SelfId: 5713366696981575375
+        SubObjectId: 17552813151448107084
+        InstanceId: 9366570798041655858
+        TemplateId: 15902721824905113374
+      }
+    }
+  }
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  CameraCollidable {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  EditorIndicatorVisibility {
+    Value: "mc:eindicatorvisibility:visiblewhenselected"
+  }
+  Script {
+    ScriptAsset {
+      Id: 18052096426048538559
     }
   }
 }
@@ -191,15 +271,6 @@ Objects {
       Name: "cs:NetworkedObject"
       ObjectReference {
         SelfId: 14954088171440346333
-      }
-    }
-    Overrides {
-      Name: "cs:SubjectCursor"
-      ObjectReference {
-        SelfId: 5713366696981575375
-        SubObjectId: 17552813151448107084
-        InstanceId: 9366570798041655858
-        TemplateId: 15902721824905113374
       }
     }
   }

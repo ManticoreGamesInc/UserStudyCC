@@ -23,6 +23,7 @@ local SPECTATOR_CAMERA = script:GetCustomProperty("SpectatorCamera")
 local EVENT_STUDY_STARTED = "UserStudy_Started"
 local EVENT_STUDY_ENDED = "UserStudy_Ended"
 local EVENT_SUBJECT_CHANGED = "UserStudy_SubjectChanged"
+local EVENT_LOCAL_PLAYER_IS_SUBJECT = "UserStudy_LocalPlayerIsSubject"
 local EVENT_REDIRECT_BROADCAST = "UserStudy_Redirect"
 
 local BINDING_NEXT_SUBJECT = "ability_primary"
@@ -136,6 +137,8 @@ function API.EndStudy(observer, arguments)
 		-- Enable observer
 		observer.isVisible = true
 		observer.isCollidable = true
+		
+		UpdateSubjectList()
 	else
 		Chat.BroadcastMessage("Not currently studying.", {players = observer})
 	end
@@ -376,14 +379,24 @@ end
 -- Client
 function OnNetworkedPropertyChanged(obj, propertyName)
 	if propertyName == "Subjects" then
-		API.activeSubjects = {}
+		local localPlayer = Game.GetLocalPlayer()
+		local localWasSubject = API.activeSubjects[localPlayer]
 		
+		API.activeSubjects = {}
+				
 		local subjectNames = API.GetSubjectNames()
 		for _,name in ipairs(subjectNames) do
 			local player = FindPlayerWithName(name)
-			if player then
+			if Object.IsValid(player) then
 				API.activeSubjects[player] = true
 			end
+		end
+		
+		if localWasSubject and not API.activeSubjects[localPlayer] then
+			Events.Broadcast(EVENT_LOCAL_PLAYER_IS_SUBJECT, false)
+			
+		elseif not localWasSubject and API.activeSubjects[localPlayer] then
+			Events.Broadcast(EVENT_LOCAL_PLAYER_IS_SUBJECT, true)
 		end
 	end
 end

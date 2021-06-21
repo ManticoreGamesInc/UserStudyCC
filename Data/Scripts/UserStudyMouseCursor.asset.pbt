@@ -1,6 +1,6 @@
 Assets {
-  Id: 16270552889358903912
-  Name: "UserStudyClient"
+  Id: 18052096426048538559
+  Name: "UserStudyMouseCursor"
   PlatformAssetType: 3
   TextAsset {
     CustomParameters {
@@ -11,7 +11,7 @@ Assets {
         }
       }
       Overrides {
-        Name: "cs:NetworkedObject"
+        Name: "cs:SubjectCursor"
         ObjectReference {
         }
       }

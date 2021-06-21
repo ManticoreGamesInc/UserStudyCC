@@ -1,6 +1,6 @@
 Assets {
-  Id: 16270552889358903912
-  Name: "UserStudyClient"
+  Id: 17262374815295182989
+  Name: "UserStudyButtonClick"
   PlatformAssetType: 3
   TextAsset {
     CustomParameters {
@@ -8,11 +8,6 @@ Assets {
         Name: "cs:UserStudyAPI"
         AssetReference {
           Id: 4351186339395260028
-        }
-      }
-      Overrides {
-        Name: "cs:NetworkedObject"
-        ObjectReference {
         }
       }
     }
