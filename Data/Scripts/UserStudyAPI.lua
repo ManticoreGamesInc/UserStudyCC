@@ -218,7 +218,6 @@ function SortPlayersForNextPrev(observer)
 		local insertAt = 1
 		
 		for i,p in ipairs(players) do
-			print(p.name)
 			if p == currentSubject then
 				insertAt = 1
 				
@@ -305,7 +304,7 @@ function API.BroadcastToObservers(eventName, ...)
 	if not API.IsSubject(subject) then return end
 	
 	if GetObserverCount() > 0 then
-		Events.BroadcastToServer(EVENT_REDIRECT_BROADCAST, eventName, unpack(arg))
+		Events.BroadcastToServer(EVENT_REDIRECT_BROADCAST, eventName, ...)
 	end
 end
 
@@ -314,9 +313,9 @@ function OnRedirectEvent(subject, eventName, ...)
 	if API.IsObserver(subject) then return end
 	
 	for observer,_ in pairs(API.activeObservers) do
-		local data = API.GetStudyData(observer)
+		local data = GetStudyData(observer)
 		if data.subject == subject and Object.IsValid(subject) then
-			Events.BroadcastToPlayer(observer, eventName, unpack(arg))
+			Events.BroadcastToPlayer(observer, eventName, ...)
 		end
 	end
 end
@@ -361,7 +360,7 @@ function UpdateSubjectList()
 	local count = 0
 	for observer,_ in pairs(API.activeObservers) do
 		local data = GetStudyData(observer)
-		if data.subject then
+		if Object.IsValid(data.subject) then
 			API.activeSubjects[data.subject] = true
 			
 			if count > 0 then

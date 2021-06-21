@@ -140,6 +140,12 @@ Objects {
           Rotator {
           }
         }
+        Overrides {
+          Name: "Visible"
+          Enum {
+            Value: "mc:evisibilitysetting:forceoff"
+          }
+        }
       }
     }
     TemplateAsset {
@@ -168,6 +174,15 @@ Objects {
       Name: "cs:NetworkedObject"
       ObjectReference {
         SelfId: 14954088171440346333
+      }
+    }
+    Overrides {
+      Name: "cs:SubjectCursor"
+      ObjectReference {
+        SelfId: 5713366696981575375
+        SubObjectId: 17552813151448107084
+        InstanceId: 9366570798041655858
+        TemplateId: 15902721824905113374
       }
     }
   }
@@ -245,6 +260,12 @@ Objects {
     }
   }
   ParentId: 18019938618028456256
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:Admins"
+      String: "standardcombo, Bot1,Bot2"
+    }
+  }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
   }

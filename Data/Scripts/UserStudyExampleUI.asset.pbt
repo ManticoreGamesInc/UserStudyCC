@@ -1,22 +1,21 @@
 Assets {
-  Id: 16270552889358903912
-  Name: "UserStudyClient"
+  Id: 4970110306589288511
+  Name: "UserStudyExampleUI"
   PlatformAssetType: 3
   TextAsset {
     CustomParameters {
       Overrides {
-        Name: "cs:UserStudyAPI"
-        AssetReference {
-          Id: 4351186339395260028
-        }
-      }
-      Overrides {
-        Name: "cs:NetworkedObject"
+        Name: "cs:Trigger"
         ObjectReference {
         }
       }
       Overrides {
-        Name: "cs:SubjectCursor"
+        Name: "cs:Panel"
+        ObjectReference {
+        }
+      }
+      Overrides {
+        Name: "cs:Button"
         ObjectReference {
         }
       }
