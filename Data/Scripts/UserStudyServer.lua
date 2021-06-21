@@ -5,24 +5,24 @@
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
-local CAMERA_PARENT = script:GetCustomProperty("CameraParent"):WaitForObject()
+local NETWORKED_OBJECT = script:GetCustomProperty("NetworkedObject"):WaitForObject()
 
-API.RegisterNetworkedObject(CAMERA_PARENT)
+API.RegisterNetworkedObject(NETWORKED_OBJECT)
 
 
-function OnStudyStarted(observer)
+--function OnStudyStarted(observer)
 	--
-end
+--end
 
-function OnStudyEnded(observer)
+--function OnStudyEnded(observer)
 	--
-end
+--end
 
-function OnSubjectChanged(observer, subject)
-	CAMERA_PARENT:AttachToPlayer(subject, "root")
-end
+--function OnSubjectChanged(observer, subject)
+	--NETWORKED_OBJECT:AttachToPlayer(subject, "root")
+--end
 
-Events.Connect("UserStudy_Started", OnStudyStarted)
-Events.Connect("UserStudy_Ended", OnStudyEnded)
-Events.Connect("UserStudy_SubjectChanged", OnSubjectChanged)
+--Events.Connect("UserStudy_Started", OnStudyStarted)
+--Events.Connect("UserStudy_Ended", OnStudyEnded)
+--Events.Connect("UserStudy_SubjectChanged", OnSubjectChanged)
 

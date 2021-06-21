@@ -5,21 +5,21 @@
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
-local CAMERA_PARENT = script:GetCustomProperty("CameraParent"):WaitForObject()
-local CAMERA = script:GetCustomProperty("Camera"):WaitForObject()
+local NETWORKED_OBJECT = script:GetCustomProperty("NetworkedObject"):WaitForObject()
+--local CAMERA = script:GetCustomProperty("Camera"):WaitForObject()
 
-local PLAYER = Game.GetLocalPlayer()
+--local PLAYER = Game.GetLocalPlayer()
 
-API.RegisterNetworkedObject(CAMERA_PARENT)
+API.RegisterNetworkedObject(NETWORKED_OBJECT)
 
 
-function OnStudyStarted()
-	PLAYER:SetOverrideCamera(CAMERA)
-end
+--function OnStudyStarted()
+	--PLAYER:SetOverrideCamera(CAMERA)
+--end
 
-function OnStudyEnded()
-	PLAYER:ClearOverrideCamera()
-end
+--function OnStudyEnded()
+	--PLAYER:ClearOverrideCamera()
+--end
 
-Events.Connect("UserStudy_Started", OnStudyStarted)
-Events.Connect("UserStudy_Ended", OnStudyEnded)
+--Events.Connect("UserStudy_Started", OnStudyStarted)
+--Events.Connect("UserStudy_Ended", OnStudyEnded)

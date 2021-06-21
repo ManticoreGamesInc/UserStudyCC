@@ -10,6 +10,12 @@ Assets {
           Id: 84735743215772271
         }
       }
+      Overrides {
+        Name: "cs:SpectatorCamera"
+        AssetReference {
+          Id: 440984951018104342
+        }
+      }
     }
   }
   SerializationVersion: 89

@@ -2,11 +2,23 @@
 	User Study - API
 	v1.0
 	by: standardcombo
+	
+	
+	Server-only functions:
+	- TODO
+	
+	Client-only functions:
+	- TODO
+	
+	Server & Client functions:
+	- TODO
+	
 --]]
 
 local API = {}
 
 local ATTACHMENT_TEMPLATE = script:GetCustomProperty("AttachmentTemplate")
+local SPECTATOR_CAMERA = script:GetCustomProperty("SpectatorCamera")
 
 local EVENT_STUDY_STARTED = "UserStudy_Started"
 local EVENT_STUDY_ENDED = "UserStudy_Ended"
@@ -18,15 +30,22 @@ local BINDING_PREV_SUBJECT = "ability_secondary"
 
 API.networkedObject = nil
 API.activeObservers = {}
+API.activeSubjects = {}
 
 
 function API.RegisterNetworkedObject(obj)
 	API.networkedObject = obj
+	
+	if Environment.IsClient() then
+		obj.networkedPropertyChangedEvent:Connect(OnNetworkedPropertyChanged)
+	end
 end
 
 
 function API.BeginStudy(observer, arguments)
 	if API.IsObserver(observer) then
+		-- TODO : Change this in case there is a target player as parameter #2
+		-- In which case it should set that as the subject
 		Chat.BroadcastMessage("Already studying.", {players = observer})
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
@@ -48,7 +67,14 @@ function API.BeginStudy(observer, arguments)
 		-- Connect action binding
 		data.bindingPressedListener = observer.bindingPressedEvent:Connect(OnBindingPressed)
 		
-		-- Attach observer
+		-- Spawn spectator camera if necessary
+		if not Object.IsValid(data.camera) then
+			camera = World.SpawnAsset(SPECTATOR_CAMERA, {position = pos, rotation = rot})
+			camera:SetNetworkedCustomProperty("OwnerID", observer.id)
+			data.camera = camera
+		end
+		
+		-- Attach observer so they can't move, etc
 		if not Object.IsValid(data.attachmentObject) then
 			local pos = observer:GetWorldPosition()
 			local attachmentObject = World.SpawnAsset(ATTACHMENT_TEMPLATE, {position = pos})
@@ -103,6 +129,12 @@ function API.EndStudy(observer, arguments)
 		data.bindingPressedListener:Disconnect()
 		data.bindingPressedListener = nil
 		
+		-- Detach camera
+		if Object.IsValid(data.camera) then
+			data.camera:Detach()
+			data.camera.parent = World.GetRootObject()
+		end
+		
 		-- Detach observer
 		observer:Detach()
 		
@@ -127,6 +159,21 @@ function SetSubject(observer, subject)
 	-- Save a reference to the subject into the observer's data
 	local data = GetStudyData(observer)
 	data.subject = subject
+	
+	UpdateSubjectList()
+	
+	-- Setup spectator camera
+	local camera = data.camera
+	local pos = subject:GetWorldPosition()
+	local rot = subject:GetWorldRotation()
+	if camera then
+		camera:SetWorldPosition(pos)
+		camera:SetWorldRotation(rot)
+	else
+		camera = World.SpawnAsset(SPECTATOR_CAMERA, {position = pos, rotation = rot})
+		data.camera = camera
+	end
+	camera:AttachToPlayer(subject, "root")
 	
 	-- Let other scripts and client know
 	Events.Broadcast(EVENT_SUBJECT_CHANGED, observer, subject)
@@ -236,16 +283,25 @@ function OnPlayerJoined(player)
 end
 
 function OnPlayerLeft(player)
-	for observer,_ in pairs(API.activeObservers) do
-		local data = GetStudyData(observer)
-		if data.isStudying and data.subject == player then
-			data.attachmentObject:Detach()
-			
-			Task.Wait(0.5)
-			if not Object.IsValid(observer) then return end
-			
-			API.NextSubject(observer)
+	-- Server
+	if Environment.IsServer() then
+		for observer,_ in pairs(API.activeObservers) do
+			local data = GetStudyData(observer)
+			if data.isStudying and data.subject == player then
+				data.attachmentObject:Detach()
+				
+				Task.Wait(0.5)
+				if not Object.IsValid(observer) then return end
+				
+				API.NextSubject(observer)
+			end
 		end
+		
+		UpdateSubjectList()
+		
+	-- Client
+	elseif Environment.IsClient() then
+		API.activeSubjects[player] = nil
 	end
 end
 
@@ -256,6 +312,8 @@ Game.playerLeftEvent:Connect(OnPlayerLeft)
 -- Client
 function API.BroadcastToObservers(eventName, ...)
 	local subject = Game.GetLocalPlayer()
+	if not API.IsSubject(subject) then return end
+	
 	if GetObserverCount() > 0 then
 		Events.BroadcastToServer(EVENT_REDIRECT_BROADCAST, eventName, unpack(arg))
 	end
@@ -290,6 +348,54 @@ end
 function SetObserverCount(value)
 	if API.networkedObject then
 		API.networkedObject:SetNetworkedCustomProperty("ObserverCount", value)
+	end
+end
+
+
+-- Client / Server
+function API.IsSubject(player)
+	return API.activeSubjects[player]
+end
+
+-- Client / Server
+function API.GetSubjectNames()
+	local str = API.networkedObject:GetCustomProperty("Subjects")
+	local result = {CoreString.Split(str, ",")}
+	return result
+end
+
+-- Server
+function UpdateSubjectList()
+	API.activeSubjects = {}
+	local listOfNames = ""
+	local count = 0
+	for observer,_ in pairs(API.activeObservers) do
+		local data = GetStudyData(observer)
+		if data.subject then
+			API.activeSubjects[data.subject] = true
+			
+			if count > 0 then
+				listOfNames = listOfNames .. ","
+			end
+			listOfNames = listOfNames .. data.subject.name
+			count = count + 1
+		end
+	end
+	API.networkedObject:SetNetworkedCustomProperty("Subjects", listOfNames)
+end
+
+-- Client
+function OnNetworkedPropertyChanged(obj, propertyName)
+	if propertyName == "Subjects" then
+		API.activeSubjects = {}
+		
+		local subjectNames = API.GetSubjectNames()
+		for _,name in ipairs(subjectNames) do
+			local player = FindPlayerWithName(name)
+			if player then
+				API.activeSubjects[player] = true
+			end
+		end
 	end
 end
 

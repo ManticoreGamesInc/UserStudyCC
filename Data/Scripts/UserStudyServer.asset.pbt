@@ -11,7 +11,7 @@ Assets {
         }
       }
       Overrides {
-        Name: "cs:CameraParent"
+        Name: "cs:NetworkedObject"
         ObjectReference {
         }
       }
