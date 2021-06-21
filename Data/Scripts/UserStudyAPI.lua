@@ -90,12 +90,7 @@ function API.BeginStudy(observer, arguments)
 		if #arguments > 0 then
 			local subject = FindPlayerWithName(arguments[1])
 			if subject then
-				if subject ~= observer then
-					SetSubject(observer, subject)
-				else
-					Chat.BroadcastMessage("Cannot study self.", {players = observer})
-					API.NextSubject(observer)
-				end
+				SetSubject(observer, subject)
 			else
 				Chat.BroadcastMessage("No player named " .. arguments[1], {players = observer})
 				API.NextSubject(observer)
@@ -154,6 +149,11 @@ end
 
 
 function SetSubject(observer, subject)
+	if subject == observer then
+		Chat.BroadcastMessage("Cannot study self.", {players = observer})
+		API.NextSubject(observer)
+		return
+	end
 	Chat.BroadcastMessage("Observing " .. subject.name, {players = observer})
 	
 	-- Save a reference to the subject into the observer's data
@@ -182,64 +182,54 @@ end
 
 
 function API.NextSubject(observer)
-	--print("Next subject")
-	
-	local data = GetStudyData(observer)
-	if not data.isStudying then return end
-	
-	local players = Game.GetPlayers({ignorePlayers = observer})
-	if #players <= 0 then return end
-	
-	local currentSubject = data.subject
-	
-	if not Object.IsValid(currentSubject) then
+	local players = SortPlayersForNextPrev(observer)
+	if players then
 		SetSubject(observer, players[1])
-		
-	elseif #players == 1 and players[1] == currentSubject then
-		return
-	else
-		for i,p in ipairs(players) do
-			if p == currentSubject then
-				if i == #players then
-					SetSubject(observer, players[1])
-				else
-					SetSubject(observer, players[i + 1])
-				end
-				return
-			end
-		end
 	end
 end
 
-
 function API.PreviousSubject(observer)
-	--print("Previous subject")
-	
+	local players = SortPlayersForNextPrev(observer)
+	if players then
+		SetSubject(observer, players[#players])
+	end
+end
+
+function SortPlayersForNextPrev(observer)
 	local data = GetStudyData(observer)
-	if not data.isStudying then return end
+	if not data.isStudying then
+		return nil
+	end
 	
 	local players = Game.GetPlayers({ignorePlayers = observer})
-	if #players <= 0 then return end
+	if #players <= 0 then
+		return nil
+	end
 	
 	local currentSubject = data.subject
 	
 	if not Object.IsValid(currentSubject) then
-		SetSubject(observer, players[1])
+		return players
 		
 	elseif #players == 1 and players[1] == currentSubject then
-		return
+		return nil
 	else
+		local sortedPlayers = {}
+		local insertAt = 1
+		
 		for i,p in ipairs(players) do
+			print(p.name)
 			if p == currentSubject then
-				if i == 1 then
-					SetSubject(observer, players[#players])
-				else
-					SetSubject(observer, players[i - 1])
-				end
-				return
+				insertAt = 1
+				
+			elseif not API.IsObserver(p) then
+				table.insert(sortedPlayers, insertAt, p)
+				insertAt = insertAt + 1
 			end
 		end
+		return sortedPlayers
 	end
+	return nil
 end
 
 
