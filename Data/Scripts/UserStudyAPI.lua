@@ -51,7 +51,7 @@ function API.BeginStudy(observer, arguments)
 	end
 	
 	-- Early exit case
-	if string.lower(playerName) == string.lower(observer.name) then
+	if playerName and string.lower(playerName) == string.lower(observer.name) then
 		Chat.BroadcastMessage("Cannot study self.", {players = observer})
 		return
 	end
@@ -187,7 +187,7 @@ end
 
 
 function SetSubject(observer, subject)
-	Chat.BroadcastMessage("Observing " .. subject.name, {players = observer})
+	Chat.BroadcastMessage("Subject = " .. subject.name, {players = observer})
 	
 	-- Save a reference to the subject into the observer's data
 	local data = GetStudyData(observer)
