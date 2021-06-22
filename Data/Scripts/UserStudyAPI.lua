@@ -126,6 +126,11 @@ function API.BeginStudy(observer, arguments)
 		else
 			API.NextSubject(observer)
 		end
+		
+		-- In case no subject was found
+		if not Object.IsValid(data.subject) then
+			Chat.BroadcastMessage("Waiting for subject.", {players = observer})
+		end
 	end
 end
 
