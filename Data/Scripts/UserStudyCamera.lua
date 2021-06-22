@@ -9,6 +9,8 @@ local CAMERA = script:GetCustomProperty("Camera"):WaitForObject()
 
 local PLAYER = Game.GetLocalPlayer()
 
+local eventListeners = {}
+
 
 function OnStudyStarted()
 	PLAYER:SetOverrideCamera(CAMERA)
@@ -18,8 +20,18 @@ function OnStudyEnded()
 	PLAYER:ClearOverrideCamera()
 end
 
-Events.Connect("UserStudy_Started", OnStudyStarted)
-Events.Connect("UserStudy_Ended", OnStudyEnded)
+table.insert(eventListeners, Events.Connect("UserStudy_Started", OnStudyStarted))
+table.insert(eventListeners, Events.Connect("UserStudy_Ended", OnStudyEnded))
+
+
+function OnDestroy()
+	for _,e in ipairs(eventListeners) do
+		e:Disconnect()
+		e = nil
+	end
+	eventListeners = nil
+end
+table.insert(eventListeners, script.destroyEvent:Connect(OnDestroy))
 
 
 function OnNetworkedPropertyChanged(obj, propertyName)
@@ -32,6 +44,7 @@ function OnNetworkedPropertyChanged(obj, propertyName)
 	end
 end
 
-ROOT.networkedPropertyChangedEvent:Connect(OnNetworkedPropertyChanged)
+table.insert(eventListeners, ROOT.networkedPropertyChangedEvent:Connect(OnNetworkedPropertyChanged))
 Task.Wait()
 OnNetworkedPropertyChanged(ROOT, "OwnerID")
+

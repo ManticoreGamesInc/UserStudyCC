@@ -51,6 +51,17 @@ function API.BeginStudy(observer, arguments)
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
 		
+		-- Enable study in the observer's own data
+		local data = GetStudyData(observer)
+		data.isStudying = true
+		
+		-- Spawn spectator camera if necessary
+		if not Object.IsValid(data.camera) then
+			camera = World.SpawnAsset(SPECTATOR_CAMERA)
+			camera:SetNetworkedCustomProperty("OwnerID", observer.id)
+			data.camera = camera
+		end
+		
 		-- Let other scripts and client know
 		Events.Broadcast(EVENT_STUDY_STARTED, observer)
 		Events.BroadcastToPlayer(observer, EVENT_STUDY_STARTED)
@@ -60,21 +71,10 @@ function API.BeginStudy(observer, arguments)
 		
 		-- Increase observer count
 		SetObserverCount(GetObserverCount() + 1)
-		
-		-- Enable study in the observer's own data
-		local data = GetStudyData(observer)
-		data.isStudying = true
-		
+				
 		-- Connect action binding
 		data.bindingPressedListener = observer.bindingPressedEvent:Connect(OnBindingPressed)
-		
-		-- Spawn spectator camera if necessary
-		if not Object.IsValid(data.camera) then
-			camera = World.SpawnAsset(SPECTATOR_CAMERA, {position = pos, rotation = rot})
-			camera:SetNetworkedCustomProperty("OwnerID", observer.id)
-			data.camera = camera
-		end
-		
+				
 		-- Attach observer so they can't move, etc
 		if not Object.IsValid(data.attachmentObject) then
 			local pos = observer:GetWorldPosition()
@@ -120,6 +120,7 @@ function API.EndStudy(observer, arguments)
 		-- Disable study in the observer's own data
 		local data = GetStudyData(observer)
 		data.isStudying = false
+		data.subject = nil
 		
 		-- Cleanup action binding
 		data.bindingPressedListener:Disconnect()
@@ -128,8 +129,10 @@ function API.EndStudy(observer, arguments)
 		-- Detach camera
 		if Object.IsValid(data.camera) then
 			data.camera:Detach()
-			data.camera.parent = World.GetRootObject()
+			data.camera:SetNetworkedCustomProperty("OwnerID", "")
+			data.camera:Destroy()
 		end
+		data.camera = nil
 		
 		-- Detach observer
 		observer:Detach()
@@ -169,13 +172,15 @@ function SetSubject(observer, subject)
 	local camera = data.camera
 	local pos = subject:GetWorldPosition()
 	local rot = subject:GetWorldRotation()
-	if camera then
+	if Object.IsValid(camera) then
 		camera:SetWorldPosition(pos)
 		camera:SetWorldRotation(rot)
 	else
 		camera = World.SpawnAsset(SPECTATOR_CAMERA, {position = pos, rotation = rot})
+		camera:SetNetworkedCustomProperty("OwnerID", observer.id)
 		data.camera = camera
 	end
+	
 	camera:AttachToPlayer(subject, "root")
 	
 	-- Let other scripts and client know
