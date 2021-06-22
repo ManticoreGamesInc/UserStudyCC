@@ -44,15 +44,42 @@ end
 
 
 function API.BeginStudy(observer, arguments)
+	-- Prepare arguments
+	local playerName = nil
+	if #arguments > 0 then
+		playerName = arguments[1]
+	end
+	
+	-- Early exit case
+	if playerName == observer.name then
+		Chat.BroadcastMessage("Cannot study self.", {players = observer})
+		return
+	end
+	
+	local data = GetStudyData(observer)
+	
+	-- Case where this observer is already studying
 	if API.IsObserver(observer) then
-		-- TODO : Change this in case there is a target player as parameter #2
-		-- In which case it should set that as the subject
-		Chat.BroadcastMessage("Already studying.", {players = observer})
+		-- Additional command arguments
+		if playerName then
+			local subject = FindPlayerWithName(playerName)
+			if subject then
+				if subject ~= data.subject then
+					SetSubject(observer, subject)
+				else
+					Chat.BroadcastMessage("Already studying " .. playerName, {players = observer})
+				end
+			else
+				Chat.BroadcastMessage("No player named " .. playerName, {players = observer})
+			end
+		else
+			Chat.BroadcastMessage("Already studying.", {players = observer})
+		end
+	-- This observer is not yet studying. Begin
 	else
 		Chat.BroadcastMessage("Studying...", {players = observer})
-		
+				
 		-- Enable study in the observer's own data
-		local data = GetStudyData(observer)
 		data.isStudying = true
 		
 		-- Spawn spectator camera if necessary
@@ -88,12 +115,12 @@ function API.BeginStudy(observer, arguments)
 		observer.isCollidable = false
 		
 		-- Additional command arguments
-		if #arguments > 0 then
-			local subject = FindPlayerWithName(arguments[1])
+		if playerName then
+			local subject = FindPlayerWithName(playerName)
 			if subject then
 				SetSubject(observer, subject)
 			else
-				Chat.BroadcastMessage("No player named " .. arguments[1], {players = observer})
+				Chat.BroadcastMessage("No player named " .. playerName, {players = observer})
 				API.NextSubject(observer)
 			end
 		else
@@ -155,11 +182,6 @@ end
 
 
 function SetSubject(observer, subject)
-	if subject == observer then
-		Chat.BroadcastMessage("Cannot study self.", {players = observer})
-		API.NextSubject(observer)
-		return
-	end
 	Chat.BroadcastMessage("Observing " .. subject.name, {players = observer})
 	
 	-- Save a reference to the subject into the observer's data
