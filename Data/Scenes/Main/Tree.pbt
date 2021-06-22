@@ -61,6 +61,16 @@ Objects {
           Name: "Name"
           String: "UserStudy"
         }
+        Overrides {
+          Name: "Position"
+          Vector {
+          }
+        }
+        Overrides {
+          Name: "Rotation"
+          Rotator {
+          }
+        }
       }
     }
     TemplateAsset {
@@ -98,6 +108,11 @@ Objects {
           Vector {
             X: 600
             Z: -6.10351563e-05
+          }
+        }
+        Overrides {
+          Name: "Rotation"
+          Rotator {
           }
         }
       }

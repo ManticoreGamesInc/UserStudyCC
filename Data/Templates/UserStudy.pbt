@@ -7,7 +7,7 @@ Assets {
       RootId: 15173654114083309554
       Objects {
         Id: 15173654114083309554
-        Name: "User Study"
+        Name: "UserStudy"
         Transform {
           Scale {
             X: 1
@@ -754,7 +754,7 @@ Assets {
           Value: "mc:eindicatorvisibility:visiblewhenselected"
         }
         Control {
-          Width: 339
+          Width: 600
           Height: 60
           RenderTransformPivot {
             Anchor {

@@ -9,6 +9,8 @@ local CLICK_SFX = script:GetCustomProperty("ClickSFX"):WaitForObject()
 local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
 local BUTTON_FEEDBACK_TEXT = script:GetCustomProperty("ButtonFeedbackText"):WaitForObject()
 
+local BUTTON_FEEDBACK_DURATION = 2 -- seconds
+
 local buttons = {}
 local listeners = {}
 
@@ -29,6 +31,9 @@ function OnButtonClicked(buttonName, buttonId)
 	
 	local button = World.FindObjectById(buttonId)
 	if Object.IsValid(button) and button:IsA("UIButton") and button:IsVisibleInHierarchy() then
+		if button.text == "" then
+			ShowFeedbackText(buttonName .. "\n" .. buttonId)
+		end
 		if not button.clientUserData.defaultColor then
 			button.clientUserData.defaultColor = button:GetButtonColor()
 		end
@@ -39,8 +44,6 @@ function OnButtonClicked(buttonName, buttonId)
 		end
 	else
 		ShowFeedbackText(buttonName)
-		Task.Wait(0.6)
-		HideFeedbackText()
 	end
 end
 Events.Connect("UserStudy_ButtonClicked", OnButtonClicked)
@@ -50,6 +53,8 @@ function ShowFeedbackText(message)
 	BUTTON_FEEDBACK_TEXT.x = SUBJECT_CURSOR.x
 	BUTTON_FEEDBACK_TEXT.y = SUBJECT_CURSOR.y
 	BUTTON_FEEDBACK_TEXT.text = message
+	
+	Task.Spawn(HideFeedbackText, BUTTON_FEEDBACK_DURATION)
 end
 
 function HideFeedbackText()
@@ -58,7 +63,14 @@ end
 
 -- Subject
 function OnSubjectButtonClicked(button)
-	API.BroadcastToObservers("UserStudy_ButtonClicked", button.text, button.id)
+	local buttonName = button.text
+	if buttonName == "" then
+		buttonName = button.name
+		if button.parent then
+			buttonName = button.parent.name .. "/" .. buttonName
+		end
+	end
+	API.BroadcastToObservers("UserStudy_ButtonClicked", buttonName, button.id)
 end
 -- Subject
 function OnLocalPlayerIsSubject(isSubject)
