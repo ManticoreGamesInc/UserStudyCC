@@ -39,6 +39,8 @@ function API.RegisterNetworkedObject(obj)
 	
 	if Environment.IsClient() then
 		obj.networkedPropertyChangedEvent:Connect(OnNetworkedPropertyChanged)
+		Task.Wait()
+		OnNetworkedPropertyChanged(obj, "Subjects")
 	end
 end
 
