@@ -29,6 +29,8 @@ function OnReceiveMessageHook(player, params)
 	local command, arg1, arg2, arg3, arg4 = CoreString.Split(message)
 	local arguments = {arg1, arg2, arg3, arg4}
 	
+	command = string.lower(command)
+	
 	-- We need to spawn task because yielding the thread is not allowed inside a hook
 	Task.Spawn(function()
 		if not Object.IsValid(player) then return end
