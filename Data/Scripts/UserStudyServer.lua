@@ -19,7 +19,7 @@ API.RegisterNetworkedObject(NETWORKED_OBJECT)
 --end
 
 --function OnSubjectChanged(observer, subject)
-	--NETWORKED_OBJECT:AttachToPlayer(subject, "root")
+	--
 --end
 
 --Events.Connect("UserStudy_Started", OnStudyStarted)

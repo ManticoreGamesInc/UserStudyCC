@@ -319,6 +319,12 @@ function OnPlayerLeft(player)
 				if not Object.IsValid(observer) then return end
 				
 				API.NextSubject(observer)
+				
+				if not Object.IsValid(data.subject) then
+					-- Let other scripts and client know
+					Events.Broadcast(EVENT_SUBJECT_CHANGED, observer, nil)
+					Events.BroadcastToPlayer(observer, EVENT_SUBJECT_CHANGED, nil)
+				end
 			end
 		end
 		
