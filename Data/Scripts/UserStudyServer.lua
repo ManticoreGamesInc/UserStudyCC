@@ -22,7 +22,7 @@ API.RegisterNetworkedObject(NETWORKED_OBJECT)
 	--
 --end
 
---Events.Connect("UserStudy_Started", OnStudyStarted)
---Events.Connect("UserStudy_Ended", OnStudyEnded)
---Events.Connect("UserStudy_SubjectChanged", OnSubjectChanged)
+--Events.Connect("Study_Start", OnStudyStarted)
+--Events.Connect("Study_End", OnStudyEnded)
+--Events.Connect("Study_NewSubject", OnSubjectChanged)
 

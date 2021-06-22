@@ -46,7 +46,7 @@ function OnButtonClicked(buttonName, buttonId)
 		ShowFeedbackText(buttonName)
 	end
 end
-Events.Connect("UserStudy_ButtonClicked", OnButtonClicked)
+Events.Connect("Study_Btn", OnButtonClicked)
 
 function ShowFeedbackText(message)
 	BUTTON_FEEDBACK_TEXT.visibility = Visibility.INHERIT
@@ -70,7 +70,7 @@ function OnSubjectButtonClicked(button)
 			buttonName = button.parent.name .. "/" .. buttonName
 		end
 	end
-	API.BroadcastToObservers("UserStudy_ButtonClicked", buttonName, button.id)
+	API.BroadcastToObservers("Study_Btn", buttonName, button.id)
 end
 -- Subject
 function OnLocalPlayerIsSubject(isSubject)
@@ -91,7 +91,7 @@ function OnLocalPlayerIsSubject(isSubject)
 	end
 end
 
-Events.Connect("UserStudy_Started", OnStudyStarted)
-Events.Connect("UserStudy_Ended", OnStudyEnded)
-Events.Connect("UserStudy_LocalPlayerIsSubject", OnLocalPlayerIsSubject)
+Events.Connect("Study_Start", OnStudyStarted)
+Events.Connect("Study_End", OnStudyEnded)
+Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
 

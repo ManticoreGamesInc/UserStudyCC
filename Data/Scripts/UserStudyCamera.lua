@@ -20,8 +20,8 @@ function OnStudyEnded()
 	PLAYER:ClearOverrideCamera()
 end
 
-table.insert(eventListeners, Events.Connect("UserStudy_Started", OnStudyStarted))
-table.insert(eventListeners, Events.Connect("UserStudy_Ended", OnStudyEnded))
+table.insert(eventListeners, Events.Connect("Study_Start", OnStudyStarted))
+table.insert(eventListeners, Events.Connect("Study_End", OnStudyEnded))
 
 
 function OnDestroy()

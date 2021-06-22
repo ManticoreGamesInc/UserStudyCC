@@ -29,9 +29,9 @@ function OnSubjectChanged(observer, subject)
 	SUBJECT_CURSOR.visibility = Visibility.FORCE_OFF
 end
 
---Events.Connect("UserStudy_Started", OnStudyStarted)
-Events.Connect("UserStudy_Ended", OnStudyEnded)
-Events.Connect("UserStudy_SubjectChanged", OnSubjectChanged)
+--Events.Connect("Study_Start", OnStudyStarted)
+Events.Connect("Study_End", OnStudyEnded)
+Events.Connect("Study_NewSubject", OnSubjectChanged)
 
 
 function Tick(deltaTime)
@@ -70,12 +70,12 @@ Task.Spawn(function()
 		if API.IsSubject(PLAYER) then
 			if UI.IsCursorVisible() then
 				wasCursorVisible = true
-				API.BroadcastToObservers("UserStudy_CursorPos", table.unpack(cursorBuffer))
+				API.BroadcastToObservers("Study_Cursor", table.unpack(cursorBuffer))
 				cursorBuffer = {}
 				
 			elseif wasCursorVisible then
 				wasCursorVisible = false
-				API.BroadcastToObservers("UserStudy_CursorPos") -- No cursor data disables it
+				API.BroadcastToObservers("Study_Cursor") -- No cursor data disables it
 				cursorBuffer = {}
 			end
 		end
@@ -92,5 +92,5 @@ function OnCursorPosition(...)
 	end
 end
 
-Events.Connect("UserStudy_CursorPos", OnCursorPosition)
+Events.Connect("Study_Cursor", OnCursorPosition)
 

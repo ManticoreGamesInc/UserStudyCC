@@ -20,11 +20,11 @@ local API = {}
 local ATTACHMENT_TEMPLATE = script:GetCustomProperty("AttachmentTemplate")
 local SPECTATOR_CAMERA = script:GetCustomProperty("SpectatorCamera")
 
-local EVENT_STUDY_STARTED = "UserStudy_Started"
-local EVENT_STUDY_ENDED = "UserStudy_Ended"
-local EVENT_SUBJECT_CHANGED = "UserStudy_SubjectChanged"
-local EVENT_LOCAL_PLAYER_IS_SUBJECT = "UserStudy_LocalPlayerIsSubject"
-local EVENT_REDIRECT_BROADCAST = "UserStudy_Redirect"
+local EVENT_STUDY_STARTED = "Study_Start"
+local EVENT_STUDY_ENDED = "Study_End"
+local EVENT_SUBJECT_CHANGED = "Study_NewSubject"
+local EVENT_LOCAL_PLAYER_IS_SUBJECT = "Study_LocalIsSubject"
+local EVENT_REDIRECT_BROADCAST = "Study_Redirect"
 
 local BINDING_NEXT_SUBJECT = "ability_primary"
 local BINDING_PREV_SUBJECT = "ability_secondary"
