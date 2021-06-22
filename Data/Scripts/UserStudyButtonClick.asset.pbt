@@ -21,9 +21,19 @@ Assets {
         }
       }
       Overrides {
-        Name: "cs:ButtonFeedbackText"
+        Name: "cs:UIContainer"
         ObjectReference {
         }
+      }
+      Overrides {
+        Name: "cs:FeedbackTextTemplate"
+        AssetReference {
+          Id: 14599555197935353646
+        }
+      }
+      Overrides {
+        Name: "cs:FeedbackTextDuration"
+        Float: 2
       }
     }
   }

@@ -7,9 +7,9 @@
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local CLICK_SFX = script:GetCustomProperty("ClickSFX"):WaitForObject()
 local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
-local BUTTON_FEEDBACK_TEXT = script:GetCustomProperty("ButtonFeedbackText"):WaitForObject()
-
-local BUTTON_FEEDBACK_DURATION = 2 -- seconds
+local UI_CONTAINER = script:GetCustomProperty("UIContainer"):WaitForObject()
+local FEEDBACK_TEXT_TEMPLATE = script:GetCustomProperty("FeedbackTextTemplate")
+local FEEDBACK_TEXT_DURATION = script:GetCustomProperty("FeedbackTextDuration")
 
 local buttons = {}
 local listeners = {}
@@ -53,12 +53,11 @@ end
 Events.Connect("Study_Btn", OnButtonClicked)
 
 function ShowFeedbackText(message)
-	BUTTON_FEEDBACK_TEXT.visibility = Visibility.INHERIT
-	BUTTON_FEEDBACK_TEXT.x = SUBJECT_CURSOR.x
-	BUTTON_FEEDBACK_TEXT.y = SUBJECT_CURSOR.y
-	BUTTON_FEEDBACK_TEXT.text = message
-	
-	Task.Spawn(HideFeedbackText, BUTTON_FEEDBACK_DURATION)
+	local feedback = World.SpawnAsset(FEEDBACK_TEXT_TEMPLATE, {parent = UI_CONTAINER})
+	feedback.x = SUBJECT_CURSOR.x
+	feedback.y = SUBJECT_CURSOR.y
+	feedback.text = message
+	feedback.lifeSpan = FEEDBACK_TEXT_DURATION
 end
 
 function HideFeedbackText()

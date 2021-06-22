@@ -277,15 +277,15 @@ Assets {
             }
           }
           Overrides {
-            Name: "cs:ButtonFeedbackText"
-            ObjectReference {
-              SubObjectId: 10046303370095485210
-            }
-          }
-          Overrides {
             Name: "cs:SubjectCursor"
             ObjectReference {
               SubObjectId: 8759839736366405345
+            }
+          }
+          Overrides {
+            Name: "cs:UIContainer"
+            ObjectReference {
+              SubObjectId: 2524084979875876053
             }
           }
         }
@@ -359,7 +359,6 @@ Assets {
         }
         ParentId: 18197296031058217759
         ChildIds: 8759839736366405345
-        ChildIds: 10046303370095485210
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -716,84 +715,6 @@ Assets {
             SelfAnchor {
               Anchor {
                 Value: "mc:euianchor:topleft"
-              }
-            }
-            TargetAnchor {
-              Anchor {
-                Value: "mc:euianchor:topleft"
-              }
-            }
-          }
-        }
-      }
-      Objects {
-        Id: 10046303370095485210
-        Name: "UI Text Box"
-        Transform {
-          Location {
-          }
-          Rotation {
-          }
-          Scale {
-            X: 1
-            Y: 1
-            Z: 1
-          }
-        }
-        ParentId: 2524084979875876053
-        Collidable_v2 {
-          Value: "mc:ecollisionsetting:inheritfromparent"
-        }
-        Visible_v2 {
-          Value: "mc:evisibilitysetting:forceoff"
-        }
-        CameraCollidable {
-          Value: "mc:ecollisionsetting:inheritfromparent"
-        }
-        EditorIndicatorVisibility {
-          Value: "mc:eindicatorvisibility:visiblewhenselected"
-        }
-        Control {
-          Width: 600
-          Height: 60
-          RenderTransformPivot {
-            Anchor {
-              Value: "mc:euianchor:middlecenter"
-            }
-          }
-          Text {
-            Label: "Button Feedback"
-            Color {
-              R: 1
-              G: 1
-              B: 1
-              A: 1
-            }
-            Size: 20
-            Justification {
-              Value: "mc:etextjustify:center"
-            }
-            AutoWrapText: true
-            Font {
-              Id: 841534158063459245
-            }
-            VerticalJustification {
-              Value: "mc:everticaljustification:center"
-            }
-            ShadowColor {
-              A: 1
-            }
-            ShadowOffset {
-            }
-            OutlineColor {
-              A: 1
-            }
-            OutlineSize: 2
-          }
-          AnchorLayout {
-            SelfAnchor {
-              Anchor {
-                Value: "mc:euianchor:middlecenter"
               }
             }
             TargetAnchor {

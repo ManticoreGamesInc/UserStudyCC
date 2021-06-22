@@ -21,7 +21,7 @@ Objects {
   ChildIds: 10005074784157121906
   ChildIds: 14982843161775482339
   ChildIds: 2581160495518123261
-  ChildIds: 9951806144245280446
+  ChildIds: 3578559188502818437
   UnregisteredParameters {
   }
   Collidable_v2 {
@@ -37,8 +37,8 @@ Objects {
   }
 }
 Objects {
-  Id: 9951806144245280446
-  Name: "User Study"
+  Id: 3578559188502818437
+  Name: "UserStudy"
   Transform {
     Scale {
       X: 1
