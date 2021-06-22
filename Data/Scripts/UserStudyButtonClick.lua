@@ -28,7 +28,7 @@ function OnButtonClicked(buttonName, buttonId)
 	CLICK_SFX:Play()
 	
 	local button = World.FindObjectById(buttonId)
-	if Object.IsValid(button) and button:IsA("UIButton") then
+	if Object.IsValid(button) and button:IsA("UIButton") and button:IsVisibleInHierarchy() then
 		if not button.clientUserData.defaultColor then
 			button.clientUserData.defaultColor = button:GetButtonColor()
 		end
