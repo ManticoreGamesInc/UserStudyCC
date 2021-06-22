@@ -51,7 +51,7 @@ function API.BeginStudy(observer, arguments)
 	end
 	
 	-- Early exit case
-	if playerName == observer.name then
+	if string.lower(playerName) == string.lower(observer.name) then
 		Chat.BroadcastMessage("Cannot study self.", {players = observer})
 		return
 	end
@@ -67,7 +67,7 @@ function API.BeginStudy(observer, arguments)
 				if subject ~= data.subject then
 					SetSubject(observer, subject)
 				else
-					Chat.BroadcastMessage("Already studying " .. playerName, {players = observer})
+					Chat.BroadcastMessage("Already studying " .. subject.name, {players = observer})
 				end
 			else
 				Chat.BroadcastMessage("No player named " .. playerName, {players = observer})
@@ -288,8 +288,9 @@ end
 
 
 function FindPlayerWithName(name)
+	name = string.lower(name)
 	for _,player in ipairs(Game.GetPlayers()) do
-		if player.name == name then
+		if name == string.lower(player.name) then
 			return player
 		end
 	end
