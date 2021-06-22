@@ -32,7 +32,11 @@ function OnButtonClicked(buttonName, buttonId)
 	local button = World.FindObjectById(buttonId)
 	if Object.IsValid(button) and button:IsA("UIButton") and button:IsVisibleInHierarchy() then
 		if button.text == "" then
-			ShowFeedbackText(buttonName .. "\n" .. buttonId)
+			if buttonName ~= "" then
+				ShowFeedbackText(buttonName .. "\n" .. buttonId)
+			else
+				ShowFeedbackText(buttonId)
+			end
 		end
 		if not button.clientUserData.defaultColor then
 			button.clientUserData.defaultColor = button:GetButtonColor()
@@ -70,7 +74,7 @@ function OnSubjectButtonClicked(button)
 			buttonName = button.parent.name .. "/" .. buttonName
 		end
 	end
-	API.BroadcastToObservers("Study_Btn", buttonName, button.id)
+	API.BroadcastToObservers("Study_Btn", buttonName, SplitMuid(button.id))
 end
 -- Subject
 function OnLocalPlayerIsSubject(isSubject)
@@ -89,6 +93,11 @@ function OnLocalPlayerIsSubject(isSubject)
 		listeners = {}
 		buttons = {}
 	end
+end
+
+function SplitMuid(muid)
+	local split = { CoreString.Split(muid, ":") }
+	return split[1]
 end
 
 Events.Connect("Study_Start", OnStudyStarted)
