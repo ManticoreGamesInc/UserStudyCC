@@ -117,7 +117,7 @@ Assets {
           FreeControl: true
           InitialDistance: 400
           IsDistanceAdjustable: true
-          MinDistance: 200
+          MinDistance: 100
           MaxDistance: 1600
           PositionOffset {
           }

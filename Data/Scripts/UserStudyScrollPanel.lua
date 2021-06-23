@@ -9,8 +9,8 @@ local UI_CONTAINER = script:GetCustomProperty("UIContainer"):WaitForObject()
 local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
 local FEEDBACK_TEXT_TEMPLATE = script:GetCustomProperty("FeedbackTextTemplate")
 
-local SCROLL_RECORD_RATE = 1
-local SCROLL_LERP_SPEED = 12
+local SEND_RATE = 1
+local LERP_SPEED = 12
 
 local PLAYER = Game.GetLocalPlayer()
 
@@ -25,7 +25,7 @@ function Tick(deltaTime)
 		ShowFeedbackText()
 		for i,scroll in ipairs(updatingScrollPanels) do
 			local targetPosition = scroll.clientUserData.targetScrollPosition
-			local t = CoreMath.Clamp(deltaTime * SCROLL_LERP_SPEED)
+			local t = CoreMath.Clamp(deltaTime * LERP_SPEED)
 			scroll.scrollPosition = CoreMath.Lerp(scroll.scrollPosition, targetPosition, t)
 			
 			local deltaPosition = math.abs(scroll.scrollPosition - targetPosition)
@@ -58,6 +58,7 @@ function HideFeedbackText()
 	end
 end
 
+-- Observer receives scroll position
 function OnScrollPanelChanged(scrollPanelId, newPosition)
 	local scroll = World.FindObjectById(scrollPanelId)
 	if Object.IsValid(scroll) and scroll:IsA("UIScrollPanel") then
@@ -68,10 +69,10 @@ end
 Events.Connect("Study_Scroll", OnScrollPanelChanged)
 
 
--- Subject buffers cursor positions
+-- Subject sends scroll position
 Task.Spawn(function()
 	while true do
-		Task.Wait(SCROLL_RECORD_RATE)
+		Task.Wait(SEND_RATE)
 		
 		if UI.IsCursorVisible() and API.IsSubject(PLAYER) then
 			for _,scroll in ipairs(allScrollPanels) do

@@ -170,7 +170,9 @@ Assets {
         ChildIds: 15002153242464043295
         ChildIds: 18274030342145814837
         ChildIds: 4056963980213897629
+        ChildIds: 12080289363736161012
         ChildIds: 2524084979875876053
+        ChildIds: 14764434212948461186
         UnregisteredParameters {
           Overrides {
             Name: "cs:ObserverCount"
@@ -470,6 +472,47 @@ Assets {
         Script {
           ScriptAsset {
             Id: 6068497002644426492
+          }
+        }
+      }
+      Objects {
+        Id: 12080289363736161012
+        Name: "UserStudyViewDirection"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 18197296031058217759
+        UnregisteredParameters {
+          Overrides {
+            Name: "cs:ViewIndicator"
+            ObjectReference {
+              SubObjectId: 14764434212948461186
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Script {
+          ScriptAsset {
+            Id: 8185302184969837579
           }
         }
       }
@@ -931,6 +974,92 @@ Assets {
           }
         }
       }
+      Objects {
+        Id: 14764434212948461186
+        Name: "ViewIndicator"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 2
+            Y: 2
+            Z: 2
+          }
+        }
+        ParentId: 18197296031058217759
+        ChildIds: 16892738597803779162
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:forceoff"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:forceoff"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:forceoff"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Folder {
+          IsGroup: true
+        }
+      }
+      Objects {
+        Id: 16892738597803779162
+        Name: "Pyramid - 4-Sided"
+        Transform {
+          Location {
+            X: 99.9999924
+          }
+          Rotation {
+            Pitch: 90
+          }
+          Scale {
+            X: 0.6
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 14764434212948461186
+        UnregisteredParameters {
+          Overrides {
+            Name: "ma:Shared_BaseMaterial:id"
+            AssetReference {
+              Id: 4512017420977149612
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        CoreMesh {
+          MeshAsset {
+            Id: 16560327167681486689
+          }
+          Teams {
+            IsTeamCollisionEnabled: true
+            IsEnemyCollisionEnabled: true
+          }
+          StaticMesh {
+            Physics {
+              Mass: 100
+              LinearDamping: 0.01
+            }
+            BoundsScale: 1
+          }
+        }
+      }
     }
     Assets {
       Id: 11237709767285311165
@@ -948,6 +1077,24 @@ Assets {
       PrimaryAsset {
         AssetType: "PlatformBrushAssetRef"
         AssetId: "CenterArrow_004Wedge"
+      }
+    }
+    Assets {
+      Id: 16560327167681486689
+      Name: "Pyramid - 4-Sided"
+      PlatformAssetType: 1
+      PrimaryAsset {
+        AssetType: "StaticMeshAssetRef"
+        AssetId: "sm_pyramid_001"
+      }
+    }
+    Assets {
+      Id: 4512017420977149612
+      Name: "Wireframe"
+      PlatformAssetType: 2
+      PrimaryAsset {
+        AssetType: "MaterialAssetRef"
+        AssetId: "wireframe_glow_001"
       }
     }
     PrimaryAssetId {
