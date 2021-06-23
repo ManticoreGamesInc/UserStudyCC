@@ -169,6 +169,7 @@ Assets {
         ChildIds: 1476032569700569251
         ChildIds: 15002153242464043295
         ChildIds: 18274030342145814837
+        ChildIds: 4056963980213897629
         ChildIds: 2524084979875876053
         UnregisteredParameters {
           Overrides {
@@ -423,6 +424,53 @@ Assets {
           Volume: 1
           Falloff: -1
           Radius: -1
+        }
+      }
+      Objects {
+        Id: 4056963980213897629
+        Name: "UserStudyScrollPanel"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 18197296031058217759
+        UnregisteredParameters {
+          Overrides {
+            Name: "cs:UIContainer"
+            ObjectReference {
+              SubObjectId: 2524084979875876053
+            }
+          }
+          Overrides {
+            Name: "cs:SubjectCursor"
+            ObjectReference {
+              SubObjectId: 8759839736366405345
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Script {
+          ScriptAsset {
+            Id: 6068497002644426492
+          }
         }
       }
       Objects {

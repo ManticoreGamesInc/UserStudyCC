@@ -6,8 +6,8 @@
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local CLICK_SFX = script:GetCustomProperty("ClickSFX"):WaitForObject()
-local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
 local UI_CONTAINER = script:GetCustomProperty("UIContainer"):WaitForObject()
+local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
 local FEEDBACK_TEXT_TEMPLATE = script:GetCustomProperty("FeedbackTextTemplate")
 local FEEDBACK_TEXT_DURATION = script:GetCustomProperty("FeedbackTextDuration")
 
@@ -94,12 +94,13 @@ function OnLocalPlayerIsSubject(isSubject)
 	end
 end
 
+Events.Connect("Study_Start", OnStudyStarted)
+Events.Connect("Study_End", OnStudyEnded)
+Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
+
+
 function SplitMuid(muid)
 	local split = { CoreString.Split(muid, ":") }
 	return split[1]
 end
-
-Events.Connect("Study_Start", OnStudyStarted)
-Events.Connect("Study_End", OnStudyEnded)
-Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
 

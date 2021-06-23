@@ -238,6 +238,7 @@ Assets {
         }
         ParentId: 15583907433805110219
         ChildIds: 9166663938110970854
+        ChildIds: 3351512603623349644
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -382,6 +383,137 @@ Assets {
         }
       }
       Objects {
+        Id: 3351512603623349644
+        Name: "UI Scroll Panel"
+        Transform {
+          Location {
+            X: -600
+            Z: 6.10351563e-05
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 7958223648979862409
+        ChildIds: 17101244818382884264
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Control {
+          Width: 300
+          Height: 250
+          UIX: -304.587769
+          UIY: -227.845276
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          ScrollPanel {
+            Orientation {
+              Value: "mc:eorientation:orient_vertical"
+            }
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomright"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomright"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 17101244818382884264
+        Name: "UI Image"
+        Transform {
+          Location {
+            X: -1267.30444
+            Y: -595.697876
+            Z: -2.28881836e-05
+          }
+          Rotation {
+            Yaw: 40.661953
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 3351512603623349644
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Control {
+          Width: 200
+          Height: 400
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          UseParentWidth: true
+          Image {
+            Brush {
+              Id: 13080947958361727764
+            }
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            TeamSettings {
+            }
+            ShadowColor {
+              A: 1
+            }
+            ShadowOffset {
+            }
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+          }
+        }
+      }
+      Objects {
         Id: 2821802476201491504
         Name: "Cube - Rounded"
         Transform {
@@ -485,6 +617,15 @@ Assets {
             Value: "mc:ecoretextverticalalign:center"
           }
         }
+      }
+    }
+    Assets {
+      Id: 13080947958361727764
+      Name: "Cat"
+      PlatformAssetType: 9
+      PrimaryAsset {
+        AssetType: "PlatformBrushAssetRef"
+        AssetId: "UI_Urban_Icon_065"
       }
     }
     Assets {
