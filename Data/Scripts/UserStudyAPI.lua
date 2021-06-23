@@ -313,6 +313,10 @@ end
 function OnPlayerLeft(player)
 	-- Server
 	if Environment.IsServer() then
+		if API.activeObservers[player] then
+			API.EndStudy(player)
+		end
+	
 		for observer,_ in pairs(API.activeObservers) do
 			local data = GetStudyData(observer)
 			if data.isStudying and data.subject == player then
