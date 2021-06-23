@@ -9,15 +9,27 @@ local CAMERA = script:GetCustomProperty("Camera"):WaitForObject()
 
 local PLAYER = Game.GetLocalPlayer()
 
+local isActive = false
 local eventListeners = {}
 
 
 function OnStudyStarted()
+	isActive = true
 	PLAYER:SetOverrideCamera(CAMERA)
 end
 
 function OnStudyEnded()
+	isActive = false
 	PLAYER:ClearOverrideCamera()
+end
+
+function Tick()
+	if isActive then
+		local activeCam = PLAYER:GetActiveCamera()
+		if activeCam ~= CAMERA and activeCam == PLAYER:GetDefaultCamera() then
+			PLAYER:SetOverrideCamera(CAMERA)
+		end
+	end
 end
 
 table.insert(eventListeners, Events.Connect("Study_Start", OnStudyStarted))
