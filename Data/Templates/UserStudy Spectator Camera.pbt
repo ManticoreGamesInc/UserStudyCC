@@ -7,7 +7,7 @@ Assets {
       RootId: 936594431711656664
       Objects {
         Id: 936594431711656664
-        Name: "UserStudy Camera"
+        Name: "UserStudy Spectator Camera"
         Transform {
           Scale {
             X: 1
@@ -15,9 +15,8 @@ Assets {
             Z: 1
           }
         }
-        ParentId: 18019938618028456256
+        ParentId: 4781671109827199097
         ChildIds: 10814231185815823091
-        ChildIds: 11170835267785700953
         UnregisteredParameters {
           Overrides {
             Name: "cs:OwnerID"
@@ -59,6 +58,7 @@ Assets {
           }
         }
         ParentId: 936594431711656664
+        ChildIds: 11170835267785700953
         UnregisteredParameters {
           Overrides {
             Name: "cs:Camera"
@@ -90,7 +90,7 @@ Assets {
         Name: "Camera"
         Transform {
           Location {
-            Z: 200
+            Z: -60
           }
           Rotation {
           }
@@ -100,7 +100,7 @@ Assets {
             Z: 1
           }
         }
-        ParentId: 936594431711656664
+        ParentId: 10814231185815823091
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }

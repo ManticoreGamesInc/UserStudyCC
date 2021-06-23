@@ -28,6 +28,7 @@ local EVENT_REDIRECT_BROADCAST = "Study_Redirect"
 
 local BINDING_NEXT_SUBJECT = "ability_primary"
 local BINDING_PREV_SUBJECT = "ability_secondary"
+local CAMERA_ATTACHMENT_SOCKET = "nameplate"
 
 API.networkedObject = nil
 API.activeObservers = {}
@@ -210,7 +211,7 @@ function SetSubject(observer, subject)
 		data.camera = camera
 	end
 	
-	camera:AttachToPlayer(subject, "root")
+	camera:AttachToPlayer(subject, CAMERA_ATTACHMENT_SOCKET)
 	
 	-- Let other scripts and client know
 	Events.Broadcast(EVENT_SUBJECT_CHANGED, observer, subject)

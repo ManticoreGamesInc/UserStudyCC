@@ -12,6 +12,8 @@ local PLAYER = Game.GetLocalPlayer()
 local isActive = false
 local eventListeners = {}
 
+script.parent = nil
+script:Follow(ROOT)
 
 function OnStudyStarted()
 	isActive = true
