@@ -16,6 +16,7 @@ Assets {
           }
         }
         ParentId: 4781671109827199097
+        ChildIds: 7668059645029075516
         ChildIds: 4435797753286988890
         ChildIds: 5008506874396758170
         ChildIds: 18197296031058217759
@@ -34,6 +35,39 @@ Assets {
         Folder {
           IsFilePartition: true
           FilePartitionName: "User Study"
+        }
+      }
+      Objects {
+        Id: 7668059645029075516
+        Name: "UserStudy_README"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 15173654114083309554
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Script {
+          ScriptAsset {
+            Id: 17302580360231554452
+          }
         }
       }
       Objects {
@@ -748,6 +782,9 @@ Assets {
       AssetType: "None"
       AssetId: "None"
     }
+  }
+  Marketplace {
+    Description: "In the persuit of improving your games, the ability to directly observe players is invaluable. If you ask your community what to change about the game, they will most likely tell you things that are only relevant to them, players who are later in the experience. However, the most important part of a game to improve is the onboarding of new players. They will leave without ever telling you what was wrong and they won\'t come back.\r\n\r\nThe User Study component allows you to directly observe new players, without their knowledge. Build an understand of where they are confused, struggling, and then engage them through in-game chat to further improve your understanding of the situation. This process can drive refinement of the game design and boost retention.\r\n\r\nSee the enclosed README for more information."
   }
   SerializationVersion: 89
 }
