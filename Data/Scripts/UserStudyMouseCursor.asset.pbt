@@ -11,6 +11,11 @@ Assets {
         }
       }
       Overrides {
+        Name: "cs:ScreenSizeScript"
+        ObjectReference {
+        }
+      }
+      Overrides {
         Name: "cs:SubjectCursor"
         ObjectReference {
         }

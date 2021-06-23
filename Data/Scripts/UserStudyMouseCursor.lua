@@ -5,6 +5,7 @@
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
+local SCREEN_SIZE_SCRIPT = script:GetCustomProperty("ScreenSizeScript"):WaitForObject()
 local SUBJECT_CURSOR = script:GetCustomProperty("SubjectCursor"):WaitForObject()
 
 local CURSOR_RECORD_RATE = 0.05
@@ -12,6 +13,11 @@ local CURSOR_SEND_RATE = 0.25
 local MAX_CURSOR_BUFFER = 4
 
 local PLAYER = Game.GetLocalPlayer()
+
+local MODE_NORMALIZED = 1
+local MODE_CENTERED = 2
+local MODE_ABSOLUTE = 3
+local cursorMode = MODE_NORMALIZED
 
 local wasCursorVisible = false
 local cursorBuffer = {}
@@ -39,7 +45,7 @@ function Tick(deltaTime)
 		readNextElapsedTime = readNextElapsedTime + deltaTime
 		if readNextElapsedTime >= CURSOR_RECORD_RATE and #cursorBuffer > 0 then
 			readNextElapsedTime = 0
-			targetCursorPosition = cursorBuffer[1]
+			targetCursorPosition = ApplyNormalizationMode(cursorBuffer[1])
 			table.remove(cursorBuffer, 1)
 		end
 		local t = readNextElapsedTime / CURSOR_RECORD_RATE
@@ -47,6 +53,28 @@ function Tick(deltaTime)
 		SUBJECT_CURSOR.x = CoreMath.Lerp(SUBJECT_CURSOR.x, targetCursorPosition.x, t)
 		SUBJECT_CURSOR.y = CoreMath.Lerp(SUBJECT_CURSOR.y, targetCursorPosition.y, t)
 	end
+end
+
+function ApplyNormalizationMode(position)
+	if not SCREEN_SIZE_SCRIPT.context then return position end
+	
+	local screenX,screenY = SCREEN_SIZE_SCRIPT.context.GetSubjectScreenSize()
+	if screenX <= 0 or screenY <= 0 then return position end
+	
+	local mySize = UI.GetScreenSize()
+	
+	-- Normalize the cursor position, from the subject's screen to the observer's
+	if cursorMode == MODE_NORMALIZED then
+		position.x = position.x / screenX * mySize.x
+		position.y = position.y / screenY * mySize.y
+		
+	elseif cursorMode == MODE_CENTERED then
+		local dx = screenX - mySize.x
+		local dy = screenY - mySize.y
+		position.x = position.x - dx / 2
+		position.y = position.y - dy / 2
+	end
+	return position
 end
 
 -- Subject buffers cursor positions

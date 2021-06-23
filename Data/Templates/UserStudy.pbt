@@ -167,8 +167,8 @@ Assets {
         ParentId: 15173654114083309554
         ChildIds: 8157733427418902720
         ChildIds: 1476032569700569251
-        ChildIds: 18274030342145814837
         ChildIds: 15002153242464043295
+        ChildIds: 18274030342145814837
         ChildIds: 2524084979875876053
         UnregisteredParameters {
           Overrides {
@@ -268,6 +268,12 @@ Assets {
               SubObjectId: 8759839736366405345
             }
           }
+          Overrides {
+            Name: "cs:ScreenSizeScript"
+            ObjectReference {
+              SubObjectId: 15002153242464043295
+            }
+          }
         }
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
@@ -284,6 +290,47 @@ Assets {
         Script {
           ScriptAsset {
             Id: 18052096426048538559
+          }
+        }
+      }
+      Objects {
+        Id: 15002153242464043295
+        Name: "UserStudyScreenSize"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 18197296031058217759
+        UnregisteredParameters {
+          Overrides {
+            Name: "cs:ScreenSizeText"
+            ObjectReference {
+              SubObjectId: 1138649292936751150
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Script {
+          ScriptAsset {
+            Id: 1446475377147721458
           }
         }
       }
@@ -376,47 +423,6 @@ Assets {
           Volume: 1
           Falloff: -1
           Radius: -1
-        }
-      }
-      Objects {
-        Id: 15002153242464043295
-        Name: "UserStudyScreenSize"
-        Transform {
-          Location {
-          }
-          Rotation {
-          }
-          Scale {
-            X: 1
-            Y: 1
-            Z: 1
-          }
-        }
-        ParentId: 18197296031058217759
-        UnregisteredParameters {
-          Overrides {
-            Name: "cs:ScreenSizeText"
-            ObjectReference {
-              SubObjectId: 1138649292936751150
-            }
-          }
-        }
-        Collidable_v2 {
-          Value: "mc:ecollisionsetting:inheritfromparent"
-        }
-        Visible_v2 {
-          Value: "mc:evisibilitysetting:inheritfromparent"
-        }
-        CameraCollidable {
-          Value: "mc:ecollisionsetting:inheritfromparent"
-        }
-        EditorIndicatorVisibility {
-          Value: "mc:eindicatorvisibility:visiblewhenselected"
-        }
-        Script {
-          ScriptAsset {
-            Id: 1446475377147721458
-          }
         }
       }
       Objects {

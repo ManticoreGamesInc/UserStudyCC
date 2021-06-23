@@ -7,9 +7,6 @@
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local TEXT = script:GetCustomProperty("ScreenSizeText"):WaitForObject()
 
-local subjectScreenX = 0
-local subjectScreenY = 0
-
 -- Subject sends their screen size
 function OnLocalPlayerIsSubject()
 	local size = UI.GetScreenSize()
@@ -21,6 +18,9 @@ end
 Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
 
 -- Observer receives the subject's screen size
+local subjectScreenX = 0
+local subjectScreenY = 0
+
 function OnSubjectScreenSize(x, y)
 	subjectScreenX = x
 	subjectScreenY = y
@@ -46,6 +46,11 @@ function OnSubjectScreenSize(x, y)
 end
 
 Events.Connect("Study_ScreenSize", OnSubjectScreenSize)
+
+-- Other observer scripts can access this information
+function GetSubjectScreenSize()
+	return subjectScreenX, subjectScreenY
+end
 
 -- Observer cleans up
 function OnStudyEnded()
