@@ -168,6 +168,7 @@ Assets {
         ChildIds: 8157733427418902720
         ChildIds: 1476032569700569251
         ChildIds: 18274030342145814837
+        ChildIds: 15002153242464043295
         ChildIds: 2524084979875876053
         UnregisteredParameters {
           Overrides {
@@ -378,6 +379,47 @@ Assets {
         }
       }
       Objects {
+        Id: 15002153242464043295
+        Name: "UserStudyScreenSize"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 18197296031058217759
+        UnregisteredParameters {
+          Overrides {
+            Name: "cs:ScreenSizeText"
+            ObjectReference {
+              SubObjectId: 1138649292936751150
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Script {
+          ScriptAsset {
+            Id: 1446475377147721458
+          }
+        }
+      }
+      Objects {
         Id: 2524084979875876053
         Name: "UI Container"
         Transform {
@@ -393,6 +435,7 @@ Assets {
         }
         ParentId: 18197296031058217759
         ChildIds: 8759839736366405345
+        ChildIds: 1138649292936751150
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -744,6 +787,81 @@ Assets {
             }
             ShadowOffset {
             }
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 1138649292936751150
+        Name: "Screen Size Text"
+        Transform {
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 2524084979875876053
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:forceoff"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        Control {
+          Width: 600
+          Height: 60
+          UIX: 10
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
+            Label: "(1600x1080) (-10,+30)"
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 18
+            Justification {
+              Value: "mc:etextjustify:left"
+            }
+            AutoWrapText: true
+            Font {
+              Id: 841534158063459245
+            }
+            VerticalJustification {
+              Value: "mc:everticaljustification:top"
+            }
+            ShadowColor {
+              A: 1
+            }
+            ShadowOffset {
+            }
+            OutlineColor {
+              A: 1
+            }
+            OutlineSize: 2
           }
           AnchorLayout {
             SelfAnchor {
