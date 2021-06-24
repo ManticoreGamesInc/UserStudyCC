@@ -11,7 +11,6 @@
 	
 	
 	Server-only functions:
-	- IsObserver(Player) - returns Boolean
 	- BeginStudy(Player observer, string[] arguments)
 	- EndStudy(Player observer)
 	- NextSubject(Player observer)
@@ -27,6 +26,7 @@
 	
 	Server & Client functions:
 	- RegisterNetworkedObject(CoreObject)
+	- IsObserver(Player) - returns Boolean
 	- IsSubject(Player) - returns Boolean
 	- GetSubjectNames() - returns string
 	
@@ -101,6 +101,7 @@ function API.BeginStudy(observer, arguments)
 				
 		-- Enable study in the observer's own data
 		data.isStudying = true
+		observer:SetResource("UserStudy_isObserver", 1)
 		
 		-- Spawn spectator camera if necessary
 		if not Object.IsValid(data.camera) then
@@ -118,7 +119,7 @@ function API.BeginStudy(observer, arguments)
 		
 		-- Increase observer count
 		SetObserverCount(GetObserverCount() + 1)
-				
+		
 		-- Connect action binding
 		data.bindingPressedListener = observer.bindingPressedEvent:Connect(OnBindingPressed)
 				
@@ -173,6 +174,7 @@ function API.EndStudy(observer, arguments)
 		local data = GetStudyData(observer)
 		data.isStudying = false
 		data.subject = nil
+		observer:SetResource("UserStudy_isObserver", 0)
 		
 		-- Cleanup action binding
 		data.bindingPressedListener:Disconnect()
@@ -199,8 +201,11 @@ function API.EndStudy(observer, arguments)
 	end
 end
 
--- Server
+-- Server & Client
 function API.IsObserver(observer)
+	if Environment.IsClient() then
+		return observer:GetResource("UserStudy_isObserver") == 1
+	end
 	local data = GetStudyData(observer)
 	return data.isStudying
 end
