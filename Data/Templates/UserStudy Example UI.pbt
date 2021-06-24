@@ -96,18 +96,6 @@ Assets {
               SubObjectId: 7958223648979862409
             }
           }
-          Overrides {
-            Name: "cs:Button"
-            ObjectReference {
-              SubObjectId: 9166663938110970854
-            }
-          }
-          Overrides {
-            Name: "cs:UserStudyAPI"
-            AssetReference {
-              Id: 4351186339395260028
-            }
-          }
         }
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
