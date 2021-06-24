@@ -3,7 +3,7 @@
 	v1.0
 	by: standardcombo
 	
-	In the persuit of improving your games, the ability to directly observe
+	In the pursuit of improving your games, the ability to directly observe
 	players is invaluable. If you ask your community what to change about
 	the game, they will most likely tell you things that are only relevant
 	to them-- players who are later in the experience. However, the most
@@ -19,7 +19,10 @@
 	
 	This project is open source at:
 	https://github.com/ManticoreGamesInc/UserStudyCC
-		
+	
+	Problems? Suggestions?
+	https://forums.coregames.com/t/user-study-a-tool-for-understanding-your-players
+	
 	
 	Setup
 	=====
@@ -164,10 +167,6 @@
 	- See key bindings pressed by the subject.
 	- CPU optimizations, so clients only expend computer resources in case
 	  they are a subject.
-	
-	
-	Problems? Suggestions?
-	forum link
-	
+		
 --]]
 
