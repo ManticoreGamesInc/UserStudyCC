@@ -1,6 +1,6 @@
 --[[
 	User Study - Button Click
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Manages replication of UI button clicks from subjects to observers.

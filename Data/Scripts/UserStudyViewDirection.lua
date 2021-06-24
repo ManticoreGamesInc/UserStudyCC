@@ -1,6 +1,6 @@
 --[[
 	User Study - Scroll Panel
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Manages replication of a subject's camera view (position/rotation) to

@@ -1,6 +1,6 @@
 --[[
 	User Study - API
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Provides a set of functions to control and to get information about

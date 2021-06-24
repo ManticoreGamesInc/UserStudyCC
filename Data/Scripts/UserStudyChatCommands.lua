@@ -1,6 +1,6 @@
 --[[
 	User Study - Chat Commands
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Intercepts text written in the chat. If it's formatted as a command,

@@ -1,6 +1,6 @@
 --[[
 	User Study - Mouse Cursor
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Manages replication of mouse cursor position from subjects to observers.

@@ -1,6 +1,6 @@
 --[[
 	User Study
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	In the pursuit of improving your games, the ability to directly observe
@@ -82,6 +82,7 @@
 	/options		- Lists the status of all options.
 	/defaults		- Resets all options to default settings. Using any of the
 	                  options on/off commands saves to your player storage.
+	                  Calling /defaults clears that use of storage.
 	/resolution on	- Enables screen resolution indicator in top-left corner.
 	/resolution off	- Disables screen resolution indicator in top-left corner.
 	/view on		- Enables camera view indicator.

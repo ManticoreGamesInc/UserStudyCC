@@ -1,6 +1,6 @@
 --[[
 	User Study - Example UI
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	This example demonstrates how a game's 2D user interface can be

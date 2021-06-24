@@ -1,6 +1,6 @@
 --[[
 	User Study - Camera
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Spectator camera that follows the subject around. The camera's

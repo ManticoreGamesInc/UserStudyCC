@@ -1,6 +1,6 @@
 --[[
 	User Study - Screen Size
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Handles replication of the subject's screen resolution to their observers.

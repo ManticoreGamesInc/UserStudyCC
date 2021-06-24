@@ -1,6 +1,6 @@
 --[[
 	User Study - Client
-	v1.0
+	v1.1
 	by: standardcombo
 	
 	Handles setup on the client-side.
