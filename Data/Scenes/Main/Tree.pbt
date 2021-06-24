@@ -20,6 +20,7 @@ Objects {
   ChildIds: 14713340454944924967
   ChildIds: 10005074784157121906
   ChildIds: 14982843161775482339
+  ChildIds: 7278589304465408451
   ChildIds: 2581160495518123261
   ChildIds: 3578559188502818437
   UnregisteredParameters {
@@ -120,6 +121,40 @@ Objects {
     TemplateAsset {
       Id: 15983495892175132320
     }
+  }
+}
+Objects {
+  Id: 7278589304465408451
+  Name: "Icon"
+  Transform {
+    Location {
+      Y: 2159.44336
+      Z: 28.5432625
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 4781671109827199097
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  CameraCollidable {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  EditorIndicatorVisibility {
+    Value: "mc:eindicatorvisibility:visiblewhenselected"
+  }
+  Folder {
+    IsFilePartition: true
+    FilePartitionName: "Icon"
   }
 }
 Objects {

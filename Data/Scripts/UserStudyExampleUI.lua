@@ -12,7 +12,6 @@
 
 local TRIGGER = script:GetCustomProperty("Trigger"):WaitForObject()
 local PANEL = script:GetCustomProperty("Panel"):WaitForObject()
-local BUTTON = script:GetCustomProperty("Button"):WaitForObject()
 
 local PLAYER = Game.GetLocalPlayer()
 

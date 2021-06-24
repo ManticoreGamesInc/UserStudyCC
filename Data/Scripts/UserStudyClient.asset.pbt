@@ -15,6 +15,14 @@ Assets {
         ObjectReference {
         }
       }
+      Overrides {
+        Name: "cs:UserStudyAPI:tooltip"
+        String: "Reference to the API script, that will be required."
+      }
+      Overrides {
+        Name: "cs:NetworkedObject:tooltip"
+        String: "Reference to the networked object that will be used by the API to send data through custom properties."
+      }
     }
   }
   SerializationVersion: 89

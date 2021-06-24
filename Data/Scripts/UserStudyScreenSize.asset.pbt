@@ -15,6 +15,14 @@ Assets {
         ObjectReference {
         }
       }
+      Overrides {
+        Name: "cs:UserStudyAPI:tooltip"
+        String: "Reference to the API script, that will be required."
+      }
+      Overrides {
+        Name: "cs:ScreenSizeText:tooltip"
+        String: "Reference to the text box where the subject\'s screen resolution will be written."
+      }
     }
   }
   SerializationVersion: 89

@@ -9,6 +9,10 @@ Assets {
         ObjectReference {
         }
       }
+      Overrides {
+        Name: "cs:Camera:tooltip"
+        String: "Reference to the client camera that is following the subject. This camera will be set as the override for the observer."
+      }
     }
   }
   SerializationVersion: 89

@@ -15,6 +15,14 @@ Assets {
         ObjectReference {
         }
       }
+      Overrides {
+        Name: "cs:UserStudyAPI:tooltip"
+        String: "Reference to the API script, that will be required."
+      }
+      Overrides {
+        Name: "cs:ViewIndicator:tooltip"
+        String: "Reference to the 3D object seen by the observer that represents the subject\'s camera view."
+      }
     }
   }
   SerializationVersion: 89

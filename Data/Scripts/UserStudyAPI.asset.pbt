@@ -16,6 +16,14 @@ Assets {
           Id: 440984951018104342
         }
       }
+      Overrides {
+        Name: "cs:AttachmentTemplate:tooltip"
+        String: "Template of an invisible object that is used for \"trapping\" the observer while a study is active. The observing player is attached to this object."
+      }
+      Overrides {
+        Name: "cs:SpectatorCamera:tooltip"
+        String: "Template of a spectator camera that is spawned for each observer when they start a study."
+      }
     }
   }
   SerializationVersion: 89
