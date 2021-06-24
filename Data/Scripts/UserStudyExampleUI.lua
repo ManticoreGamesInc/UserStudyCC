@@ -1,5 +1,9 @@
+--[[
+	User Study - Example UI
+	v1.0
+	by: standardcombo
+--]]
 
-local USER_STUDY_API = require( script:GetCustomProperty("UserStudyAPI") )
 local TRIGGER = script:GetCustomProperty("Trigger"):WaitForObject()
 local PANEL = script:GetCustomProperty("Panel"):WaitForObject()
 local BUTTON = script:GetCustomProperty("Button"):WaitForObject()
@@ -16,7 +20,7 @@ function OnBeginOverlap(trigger, player)
 	UI.SetCursorVisible(true)
 	UI.SetCanCursorInteractWithUI(true)
 	
-	USER_STUDY_API.BroadcastToObservers("Show_ExamplePanel")
+	if _G.UserStudy then _G.UserStudy.BroadcastToObservers("Show_ExamplePanel") end
 end
 
 function OnEndOverlap(trigger, player)
@@ -28,7 +32,7 @@ function OnEndOverlap(trigger, player)
 	UI.SetCursorVisible(false)
 	UI.SetCanCursorInteractWithUI(false)
 	
-	USER_STUDY_API.BroadcastToObservers("Hide_ExamplePanel")
+	if _G.UserStudy then _G.UserStudy.BroadcastToObservers("Hide_ExamplePanel") end
 end
 
 TRIGGER.beginOverlapEvent:Connect(OnBeginOverlap)
