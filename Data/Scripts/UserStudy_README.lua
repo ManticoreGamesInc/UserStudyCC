@@ -53,6 +53,10 @@
 	prior to that? Take notes and look for patterns between multiple
 	players.
 	
+	If you see a new player joining your game, you can type
+	/study <player name>
+	To begin studying them immediately.
+	
 	Supports multiple simultaneous observers who may, or may not, be
 	observing the same subjects.
 	
@@ -148,6 +152,8 @@
 	Future Work
 	===========
 	- Video tutorial.
+	- Command "/study -join" to automatically begin studying the next
+	  player who joins.
 	- Commands to toggle observation features on/off.
 	- Command to change mouse cursor normalization mode.
 	- See the subject's resources.
