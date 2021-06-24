@@ -16,6 +16,9 @@
 	struggling, and then engage them through in-game chat to further improve
 	your understanding of the situation. This process can drive refinement
 	of the game design and boost retention.
+	
+	This project is open source at:
+	https://github.com/ManticoreGamesInc/UserStudyCC
 		
 	
 	Setup
@@ -161,6 +164,10 @@
 	- See key bindings pressed by the subject.
 	- CPU optimizations, so clients only expend computer resources in case
 	  they are a subject.
+	
+	
+	Problems? Suggestions?
+	forum link
 	
 --]]
 
