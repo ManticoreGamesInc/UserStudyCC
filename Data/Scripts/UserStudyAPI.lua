@@ -3,15 +3,27 @@
 	v1.0
 	by: standardcombo
 	
+	Provides a set of functions to control and to get information about
+	the study. The API script itself is state-less. Study state is stored
+	in the observer's `serverUserData`.
+	
+	See the README file to learn more about this package.
+	
 	
 	Server-only functions:
-	- TODO
+	- BeginStudy(Player observer, string[] arguments)
+	- EndStudy(Player observer)
+	- IsObserver(Player) - returns Boolean
+	- NextSubject(Player observer)
+	- PreviousSubject(Player observer)
 	
 	Client-only functions:
-	- TODO
+	- BroadcastToObservers(string eventName, ...)
 	
 	Server & Client functions:
-	- TODO
+	- RegisterNetworkedObject(CoreObject)
+	- IsSubject(Player) - returns Boolean
+	- GetSubjectNames() - returns string
 	
 --]]
 
@@ -34,7 +46,7 @@ API.networkedObject = nil
 API.activeObservers = {}
 API.activeSubjects = {}
 
-
+-- Server & Client
 function API.RegisterNetworkedObject(obj)
 	API.networkedObject = obj
 	
@@ -45,7 +57,7 @@ function API.RegisterNetworkedObject(obj)
 	end
 end
 
-
+-- Server
 function API.BeginStudy(observer, arguments)
 	-- Prepare arguments
 	local playerName = nil
@@ -137,7 +149,7 @@ function API.BeginStudy(observer, arguments)
 	end
 end
 
-
+-- Server
 function API.EndStudy(observer, arguments)
 	if API.IsObserver(observer) then
 		Chat.BroadcastMessage("Ending study.", {players = observer})
@@ -182,7 +194,7 @@ function API.EndStudy(observer, arguments)
 	end
 end
 
-
+-- Server
 function API.IsObserver(observer)
 	local data = GetStudyData(observer)
 	return data.isStudying
@@ -218,7 +230,7 @@ function SetSubject(observer, subject)
 	Events.BroadcastToPlayer(observer, EVENT_SUBJECT_CHANGED, subject)
 end
 
-
+-- Server
 function API.NextSubject(observer)
 	local players = SortPlayersForNextPrev(observer)
 	if players then
@@ -226,6 +238,7 @@ function API.NextSubject(observer)
 	end
 end
 
+-- Server
 function API.PreviousSubject(observer)
 	local players = SortPlayersForNextPrev(observer)
 	if players then

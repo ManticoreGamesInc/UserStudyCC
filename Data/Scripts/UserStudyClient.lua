@@ -2,6 +2,8 @@
 	User Study - Client
 	v1.0
 	by: standardcombo
+	
+	Handles setup on the client-side.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )

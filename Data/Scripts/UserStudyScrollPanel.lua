@@ -2,6 +2,8 @@
 	User Study - Scroll Panel
 	v1.0
 	by: standardcombo
+	
+	Manages replication of UI Scroll Panels from subjects to observers.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
@@ -100,10 +102,9 @@ function OnLocalPlayerIsSubject(isSubject)
 		allScrollPanels = {}
 	end
 end
-
 Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
 
-
+-- Eliminate the second half of the MUID, as the first half is enough for identity
 function SplitMuid(muid)
 	local split = { CoreString.Split(muid, ":") }
 	return split[1]

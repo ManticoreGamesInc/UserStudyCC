@@ -2,6 +2,8 @@
 	User Study - Mouse Cursor
 	v1.0
 	by: standardcombo
+	
+	Manages replication of mouse cursor position from subjects to observers.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
@@ -24,30 +26,30 @@ local cursorBuffer = {}
 local readNextElapsedTime = 0
 local targetCursorPosition = Vector2.New()
 
---function OnStudyStarted()
---end
-
+-- Hide the cursor if the study ends
 function OnStudyEnded()
 	SUBJECT_CURSOR.visibility = Visibility.FORCE_OFF
 end
 
+-- Hide the cursor if the subject changes
 function OnSubjectChanged(observer, subject)
 	SUBJECT_CURSOR.visibility = Visibility.FORCE_OFF
 end
 
---Events.Connect("Study_Start", OnStudyStarted)
 Events.Connect("Study_End", OnStudyEnded)
 Events.Connect("Study_NewSubject", OnSubjectChanged)
 
-
+-- Observer updates the position of the fake cursor
 function Tick(deltaTime)
 	if SUBJECT_CURSOR.visibility == Visibility.INHERIT then
+		-- Debuffer position data, one at a time
 		readNextElapsedTime = readNextElapsedTime + deltaTime
 		if readNextElapsedTime >= CURSOR_RECORD_RATE and #cursorBuffer > 0 then
 			readNextElapsedTime = 0
 			targetCursorPosition = ApplyNormalizationMode(cursorBuffer[1])
 			table.remove(cursorBuffer, 1)
 		end
+		-- Smooth the movement
 		local t = readNextElapsedTime / CURSOR_RECORD_RATE
 		t = CoreMath.Clamp(t)
 		SUBJECT_CURSOR.x = CoreMath.Lerp(SUBJECT_CURSOR.x, targetCursorPosition.x, t)
@@ -55,6 +57,8 @@ function Tick(deltaTime)
 	end
 end
 
+-- Observer has to decide how to handle cursor positions when the resolution of
+-- their screen differs from that of the subject
 function ApplyNormalizationMode(position)
 	if not SCREEN_SIZE_SCRIPT.context then return position end
 	

@@ -2,6 +2,8 @@
 	User Study - Screen Size
 	v1.0
 	by: standardcombo
+	
+	Handles replication of the subject's screen resolution to their observers.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )

@@ -2,6 +2,8 @@
 	User Study - Button Click
 	v1.0
 	by: standardcombo
+	
+	Manages replication of UI button clicks from subjects to observers.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
@@ -14,18 +16,7 @@ local FEEDBACK_TEXT_DURATION = script:GetCustomProperty("FeedbackTextDuration")
 local buttons = {}
 local listeners = {}
 
--- Observer
-function OnStudyStarted()
-	--buttons = World.FindObjectsByType("UIButton")
-end
-
--- Observer
-function OnStudyEnded()
-	--for _,b in ipairs(buttons) do
-		
-	--end
-end
-
+-- Observers are notified that their subject clicked on a button
 function OnButtonClicked(buttonName, buttonId)
 	CLICK_SFX:Play()
 	
@@ -64,7 +55,7 @@ function HideFeedbackText()
 	BUTTON_FEEDBACK_TEXT.visibility = Visibility.FORCE_OFF
 end
 
--- Subject
+-- Subject clicked on a button. Tell the observers about it
 function OnSubjectButtonClicked(button)
 	local buttonName = button.text
 	if buttonName == "" then
@@ -75,15 +66,20 @@ function OnSubjectButtonClicked(button)
 	end
 	API.BroadcastToObservers("Study_Btn", buttonName, SplitMuid(button.id))
 end
--- Subject
+
+-- Subject gets message that their status as subject has changed
 function OnLocalPlayerIsSubject(isSubject)
+	-- They were not a subject, but now they are
 	if isSubject then
+		-- Gather buttons and connect to their click events
 		buttons = World.FindObjectsByType("UIButton")
 		for _,b in ipairs(buttons) do
 			local eventListener = b.clickedEvent:Connect(OnSubjectButtonClicked)
 			table.insert(listeners, eventListener)
 		end
+	-- They used to be a subject, but are no longer
 	else
+		-- Cleanup
 		for _,l in ipairs(listeners) do
 			if l then
 				l:Disconnect()
@@ -93,12 +89,9 @@ function OnLocalPlayerIsSubject(isSubject)
 		buttons = {}
 	end
 end
-
-Events.Connect("Study_Start", OnStudyStarted)
-Events.Connect("Study_End", OnStudyEnded)
 Events.Connect("Study_LocalIsSubject", OnLocalPlayerIsSubject)
 
-
+-- Eliminate the second half of the MUID, as the first half is enough for identity
 function SplitMuid(muid)
 	local split = { CoreString.Split(muid, ":") }
 	return split[1]

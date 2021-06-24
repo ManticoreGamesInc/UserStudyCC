@@ -2,11 +2,16 @@
 	User Study - Chat Commands
 	v1.0
 	by: standardcombo
+	
+	Intercepts text written in the chat. If it's formatted as a command,
+	then it will be forwarded to the API, at the appropriate function
+	that matches the command.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local ADMINS_CSS = script:GetCustomProperty("Admins")
 
+-- Pre-process the list of admins who are allowed to use the commands
 local ADMINS = {}
 local adminTable = { CoreString.Split(ADMINS_CSS, ",") }
 for _,name in ipairs(adminTable) do

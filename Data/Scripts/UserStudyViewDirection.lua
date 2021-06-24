@@ -2,6 +2,9 @@
 	User Study - Scroll Panel
 	v1.0
 	by: standardcombo
+	
+	Manages replication of a subject's camera view (position/rotation) to
+	their observers.
 --]]
 
 local API = require( script:GetCustomProperty("UserStudyAPI") )
