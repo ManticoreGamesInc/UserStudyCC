@@ -42,6 +42,7 @@ local EVENT_STUDY_ENDED = "Study_End"
 local EVENT_SUBJECT_CHANGED = "Study_NewSubject"
 local EVENT_LOCAL_PLAYER_IS_SUBJECT = "Study_LocalIsSubject"
 local EVENT_REDIRECT_BROADCAST = "Study_Redirect"
+local EVENT_OPTION_CHANGED = "Study_OptionChanged"
 
 local BINDING_NEXT_SUBJECT = "ability_primary"
 local BINDING_PREV_SUBJECT = "ability_secondary"
@@ -327,6 +328,9 @@ end
 function OnPlayerJoined(player)
 	if Environment.IsServer() then
 		LoadAllOptions(player)
+		
+	elseif Environment.IsClient() and player == Game.GetLocalPlayer() then
+		player.resourceChangedEvent:Connect(OnLocalPlayerResourceChanged)
 	end
 	
 	for observer,_ in pairs(API.activeObservers) do
@@ -495,6 +499,7 @@ end
 
 -- Server
 function API.ListAllOptions(observer)
+	Chat.BroadcastMessage("Options:", {players = observer})
 	ListOption(observer, "resolution", "res")
 	ListOption(observer, "view", "view")
 end
@@ -602,6 +607,17 @@ end
 -- Server
 function ReplicateAllOptionsToSubject(observer)
 	-- TODO
+end
+
+-- Client
+function OnLocalPlayerResourceChanged(player, resName, resAmount)
+	local prefix = "UserStudy_"
+	local len = string.len(prefix)
+	if string.sub(resName, 1, len) == prefix then
+		local optionName = string.sub(resName, len + 1)
+		local optionValue = (resAmount == 1)
+		Events.Broadcast(EVENT_OPTION_CHANGED, optionName, optionValue)
+	end
 end
 
 return API

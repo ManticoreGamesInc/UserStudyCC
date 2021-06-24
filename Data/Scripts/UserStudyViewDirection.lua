@@ -23,7 +23,8 @@ local targetQuaternion = nil
 -- Observer updates the view indicator to match the subject's camera
 function Tick(deltaTime)
 	if Object.IsValid(subject) 
-	and currentPosition and targetPosition and targetQuaternion then
+	and currentPosition and targetPosition and targetQuaternion
+	and API.GetOption(PLAYER, "view") then
 		local subjectPos = subject:GetWorldPosition()
 		
 		local t = CoreMath.Clamp(deltaTime * LERP_SPEED)
@@ -57,7 +58,7 @@ Task.Spawn(function()
 	while true do
 		Task.Wait(SEND_RATE)
 		
-		if API.IsSubject(PLAYER) then
+		if API.IsSubject(PLAYER) and API.GetOption(PLAYER, "view") then
 			local pos = PLAYER:GetViewWorldPosition()
 			local rot = PLAYER:GetViewWorldRotation()
 			
