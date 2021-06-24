@@ -979,22 +979,24 @@ Assets {
         Name: "ViewIndicator"
         Transform {
           Location {
+            Z: 50
           }
           Rotation {
           }
           Scale {
-            X: 2
-            Y: 2
-            Z: 2
+            X: 1.25
+            Y: 1.25
+            Z: 1.25
           }
         }
         ParentId: 18197296031058217759
         ChildIds: 16892738597803779162
+        ChildIds: 11383387441217424689
         Collidable_v2 {
           Value: "mc:ecollisionsetting:forceoff"
         }
         Visible_v2 {
-          Value: "mc:evisibilitysetting:forceoff"
+          Value: "mc:evisibilitysetting:forceon"
         }
         CameraCollidable {
           Value: "mc:ecollisionsetting:forceoff"
@@ -1060,6 +1062,68 @@ Assets {
           }
         }
       }
+      Objects {
+        Id: 11383387441217424689
+        Name: "Cube - Bottom-Aligned"
+        Transform {
+          Location {
+            X: 100
+          }
+          Rotation {
+            Pitch: -90
+          }
+          Scale {
+            X: 0.001
+            Y: 0.001
+            Z: 6
+          }
+        }
+        ParentId: 14764434212948461186
+        UnregisteredParameters {
+          Overrides {
+            Name: "ma:Shared_BaseMaterial:id"
+            AssetReference {
+              Id: 4512017420977149612
+            }
+          }
+          Overrides {
+            Name: "ma:Shared_BaseMaterial:color"
+            Color {
+              G: 0.133524
+              B: 1
+              A: 1
+            }
+          }
+        }
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        CameraCollidable {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        EditorIndicatorVisibility {
+          Value: "mc:eindicatorvisibility:visiblewhenselected"
+        }
+        CoreMesh {
+          MeshAsset {
+            Id: 12552952649771352506
+          }
+          Teams {
+            IsTeamCollisionEnabled: true
+            IsEnemyCollisionEnabled: true
+          }
+          StaticMesh {
+            Physics {
+              Mass: 100
+              LinearDamping: 0.01
+            }
+            BoundsScale: 1
+          }
+        }
+      }
     }
     Assets {
       Id: 11237709767285311165
@@ -1095,6 +1159,15 @@ Assets {
       PrimaryAsset {
         AssetType: "MaterialAssetRef"
         AssetId: "wireframe_glow_001"
+      }
+    }
+    Assets {
+      Id: 12552952649771352506
+      Name: "Cube - Bottom-Aligned"
+      PlatformAssetType: 1
+      PrimaryAsset {
+        AssetType: "StaticMeshAssetRef"
+        AssetId: "sm_cube_001"
       }
     }
     PrimaryAssetId {
