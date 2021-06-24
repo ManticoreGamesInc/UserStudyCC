@@ -313,13 +313,17 @@ end
 function OnPlayerLeft(player)
 	-- Server
 	if Environment.IsServer() then
+		-- If the player who left was an observer, end their study
 		if API.activeObservers[player] then
 			API.EndStudy(player)
 		end
-	
+		
+		-- Check if the player who left was a subject
 		for observer,_ in pairs(API.activeObservers) do
 			local data = GetStudyData(observer)
 			if data.isStudying and data.subject == player then
+				Chat.BroadcastMessage("Subject Left the game: " .. player.name, {players = observer})
+			
 				data.attachmentObject:Detach()
 				
 				Task.Wait(0.5)
