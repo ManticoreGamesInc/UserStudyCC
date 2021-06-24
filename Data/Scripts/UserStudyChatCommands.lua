@@ -43,7 +43,7 @@ function OnReceiveMessageHook(player, params)
 		if command == "/study" then
 			API.BeginStudy(player, arguments)
 			
-		elseif command == "/endstudy" then
+		elseif command == "/endstudy" or (command == "/end" and arguments[1] == "study") then
 			API.EndStudy(player, arguments)
 			
 		elseif command == "/next" then
