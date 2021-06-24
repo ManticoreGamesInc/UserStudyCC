@@ -2476,7 +2476,7 @@ Assets {
       Name: "UserStudyServer"
       PlatformAssetType: 3
       TextAsset {
-        Text: "--[[\r\n\tUser Study - Server\r\n\tv1.0\r\n\tby: standardcombo\r\n\t\r\n\tHandles setup on the server-side.\r\n--]]\r\n\r\nlocal API = require( script:GetCustomProperty(\"UserStudyAPI\") )\r\nlocal NETWORKED_OBJECT = script:GetCustomProperty(\"NetworkedObject\"):WaitForObject()\r\n\r\nAPI.RegisterNetworkedObject(NETWORKED_OBJECT)\r\n\r\n"
+        Text: "--[[\r\n\tUser Study - Server\r\n\tv1.0\r\n\tby: standardcombo\r\n\t\r\n\tHandles setup on the server-side.\r\n--]]\r\n\r\nlocal API = require( script:GetCustomProperty(\"UserStudyAPI\") )\r\nlocal NETWORKED_OBJECT = script:GetCustomProperty(\"NetworkedObject\"):WaitForObject()\r\n\r\n_G.UserStudy = API\r\n\r\nAPI.RegisterNetworkedObject(NETWORKED_OBJECT)\r\n\r\n"
         CustomParameters {
           Overrides {
             Name: "cs:UserStudyAPI"
@@ -2537,7 +2537,7 @@ Assets {
     Id: "8712e7da8aa14b30bcf6ac1c8949a1a7"
     OwnerAccountId: "b4c6e32137e54571814b5e8f27aa2fcd"
     OwnerName: "standardcombo"
-    Description: "In the persuit of improving your games, the ability to directly observe players is invaluable. If you ask your community what to change about the game, they will most likely tell you things that are only relevant to them, players who are later in the experience. However, the most important part of a game to improve is the onboarding of new players. They will go away without ever telling you what was wrong. Players that leave without having enjoyed the game are unlikely to ever come back.\r\n\r\nThe User Study component allows you to directly observe new players, without their knowledge. Build an understand of where they are confused, struggling, and then engage them through in-game chat to further improve your understanding of the situation. This process can drive refinement of the game design and boost retention.\r\n\r\nSee the enclosed README for more information."
+    Description: "In the pursuit of improving your games, the ability to directly observe players is invaluable. If you ask your community what to change about the game, they will most likely tell you things that are only relevant to them, players who are later in the experience. However, the most important part of a game to improve is the onboarding of new players. They will go away without ever telling you what was wrong. Players that leave without having enjoyed the game are unlikely to ever come back.\r\n\r\nThe User Study component allows you to directly observe new players, without their knowledge. Build an understand of where they are confused, struggling, and then engage them through in-game chat to further improve your understanding of the situation. This process can drive refinement of the game design and boost retention.\r\n\r\nSee the enclosed README for more information."
   }
   SerializationVersion: 89
 }

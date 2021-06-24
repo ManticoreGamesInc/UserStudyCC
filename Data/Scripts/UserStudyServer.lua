@@ -9,5 +9,7 @@
 local API = require( script:GetCustomProperty("UserStudyAPI") )
 local NETWORKED_OBJECT = script:GetCustomProperty("NetworkedObject"):WaitForObject()
 
+_G.UserStudy = API
+
 API.RegisterNetworkedObject(NETWORKED_OBJECT)
 
