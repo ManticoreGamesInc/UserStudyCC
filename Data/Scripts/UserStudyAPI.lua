@@ -11,11 +11,16 @@
 	
 	
 	Server-only functions:
+	- IsObserver(Player) - returns Boolean
 	- BeginStudy(Player observer, string[] arguments)
 	- EndStudy(Player observer)
-	- IsObserver(Player) - returns Boolean
 	- NextSubject(Player observer)
 	- PreviousSubject(Player observer)
+	- ListAllOptions(Player observer)
+	- ToggleResolution(Player observer, Boolean)
+	- ToggleViewIndicator(Player observer, Boolean)
+	- GetOption(Player player, string optionName)
+	- ResetAllOptionsToDefault(Player observer)
 	
 	Client-only functions:
 	- BroadcastToObservers(string eventName, ...)
@@ -315,6 +320,10 @@ end
 
 
 function OnPlayerJoined(player)
+	if Environment.IsServer() then
+		LoadAllOptions(player)
+	end
+	
 	for observer,_ in pairs(API.activeObservers) do
 		local data = GetStudyData(observer)
 		if data.isStudying and not Object.IsValid(data.subject) then
@@ -449,9 +458,9 @@ function OnNetworkedPropertyChanged(obj, propertyName)
 				
 		local subjectNames = API.GetSubjectNames()
 		for _,name in ipairs(subjectNames) do
-			local player = FindPlayerWithName(name)
-			if Object.IsValid(player) then
-				API.activeSubjects[player] = true
+			local subject = FindPlayerWithName(name)
+			if Object.IsValid(subject) then
+				API.activeSubjects[subject] = true
 			end
 		end
 		
@@ -464,6 +473,135 @@ function OnNetworkedPropertyChanged(obj, propertyName)
 	end
 end
 
+-- Server
+-- Options are tool settings/preferences, e.g. view indicator on/off
+function API.ResetAllOptionsToDefault(observer)
+	local data = Storage.GetPlayerData(observer)
+	
+	data.UserStudy = nil
+	
+	Storage.SetPlayerData(observer, data)
+	
+	LoadAllOptions(observer)
+	SaveAllOptions(observer)
+	
+	Chat.BroadcastMessage("All options are reset to default.", {players = observer})
+end
+
+-- Server
+function API.ListAllOptions(observer)
+	ListOption(observer, "resolution", "res")
+	ListOption(observer, "view", "view")
+end
+function ListOption(observer, displayName, optionName)
+	local strValue = "off"
+	if API.GetOption(observer, optionName) then
+		strValue = "on"
+	end
+	Chat.BroadcastMessage(displayName .. " = " .. strValue, {players = observer})
+end
+
+-- Server
+function API.ToggleResolution(observer, enabled)
+	if enabled then
+		Chat.BroadcastMessage("Enabling screen resolution label.", {players = observer})
+	else
+		Chat.BroadcastMessage("Disabling screen resolution label.", {players = observer})
+	end
+	
+	SaveOption(observer, "res", enabled)
+end
+
+-- Server
+function API.ToggleViewIndicator(observer, enabled)
+	if enabled then
+		Chat.BroadcastMessage("Enabling view indicator.", {players = observer})
+	else
+		Chat.BroadcastMessage("Disabling view indicator.", {players = observer})
+	end
+	
+	SaveOption(observer, "view", enabled)
+end
+
+-- Server
+function LoadAllOptions(observer)
+	API.SetOption(observer, "res", LoadOption(observer, "res", true))
+	API.SetOption(observer, "view", LoadOption(observer, "view", true))
+end
+
+-- Server
+function SaveAllOptions(observer)
+	SaveOption(observer, "res", API.GetOption(observer, "res"))
+	SaveOption(observer, "view", API.GetOption(observer, "view"))
+end
+
+-- Server
+function LoadOption(observer, optionName, defaultValue)
+	local data = Storage.GetPlayerData(observer)
+	
+	if not data.UserStudy then
+		return defaultValue
+	end
+	if data.UserStudy[optionName] ~= nil then
+		return data.UserStudy[optionName]
+	end
+	return defaultValue
+end
+
+-- Server
+function SaveOption(observer, optionName, value)
+	if value == nil then return end
+	
+	local data = Storage.GetPlayerData(observer)
+	
+	if not data.UserStudy then
+		data.UserStudy = {}
+	end
+	
+	data.UserStudy[optionName] = value
+	
+	Storage.SetPlayerData(observer, data)
+	
+	API.SetOption(observer, optionName, value)
+end
+
+-- Server & Client
+function API.GetOption(observerOrSubject, optionName)
+	if Environment.IsClient() then
+		return observerOrSubject:GetResource("UserStudy_" .. optionName) == 1
+	end
+	local studyData = GetStudyData(observerOrSubject)
+	return studyData[optionName]
+end
+
+-- Server
+function API.SetOption(observer, optionName, value)
+	local studyData = GetStudyData(observer)
+	studyData[optionName] = value
+	
+	local resName = "UserStudy_" .. optionName
+	local resValue = 0
+	if value then
+		resValue = 1
+	end
+	
+	-- Replicate option to observer
+	observer:SetResource(resName, resValue)
+	
+	-- Replicate option to subject
+	if Object.IsValid(studyData.subject) then
+		studyData.subject:SetResource(resName, resValue)
+	end
+end
+
+-- Server
+function ReplicateAllOptionsToSubject(observer)
+	-- TODO
+end
 
 return API
+
+
+
+
 

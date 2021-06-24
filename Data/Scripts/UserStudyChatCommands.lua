@@ -51,9 +51,47 @@ function OnReceiveMessageHook(player, params)
 			
 		elseif command == "/prev" then
 			API.PreviousSubject(player)
+			
+		elseif command == "/options" then
+			API.ListAllOptions(player)
+		
+		elseif command == "/defaults" then
+			API.ResetAllOptionsToDefault(player)
+			
+		elseif command == "/resolution" then
+			ToggleResolution(player, arguments)
+			
+		elseif command == "/view" then
+			ToggleViewIndicator(player, arguments)
 		end
 	end)
 end
 
 Chat.receiveMessageHook:Connect(OnReceiveMessageHook)
+
+
+function ToggleResolution(player, arguments)
+	local value = arguments[1]
+	if value and string.lower(value) == "on" then
+		API.ToggleResolution(player, true)
+	
+	elseif value and string.lower(value) == "off" then
+		API.ToggleResolution(player, false)
+	else
+		Chat.BroadcastMessage("Use command '/resolution on' or '/resolution off'", {players = observer})
+	end
+end
+
+
+function ToggleViewIndicator(player, arguments)
+	local value = arguments[1]
+	if value and string.lower(value) == "on" then
+		API.ToggleViewIndicator(player, true)
+	
+	elseif value and string.lower(value) == "off" then
+		API.ToggleViewIndicator(player, false)
+	else
+		Chat.BroadcastMessage("Use command '/view on' or '/view off'", {players = observer})
+	end
+end
 

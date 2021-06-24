@@ -79,6 +79,13 @@
 	/endstudy		- Stops observing and respawns your avatar.
 	/next			- Observes the next player if currently studying.
 	/prev			- Observes the previous player if currently studying.
+	/options		- Lists the status of all options.
+	/defaults		- Resets all options to default settings. Using any of the
+	                  options on/off commands saves to your player storage.
+	/resolution on	- Enables screen resolution indicator in top-left corner.
+	/resolution off	- Disables screen resolution indicator in top-left corner.
+	/view on		- Enables camera view indicator.
+	/view off		- Disables camera view indicator.
 	
 	
 	View Indicator

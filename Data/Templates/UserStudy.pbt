@@ -996,7 +996,7 @@ Assets {
           Value: "mc:ecollisionsetting:forceoff"
         }
         Visible_v2 {
-          Value: "mc:evisibilitysetting:forceon"
+          Value: "mc:evisibilitysetting:forceoff"
         }
         CameraCollidable {
           Value: "mc:ecollisionsetting:forceoff"
@@ -1176,7 +1176,7 @@ Assets {
     }
   }
   Marketplace {
-    Description: "In the pursuit of improving your games, the ability to directly observe players is invaluable. If you ask your community what to change about the game, they will most likely tell you things that are only relevant to them, players who are later in the experience. However, the most important part of a game to improve is the onboarding of new players. They will go away without ever telling you what was wrong. Players that leave without having enjoyed the game are unlikely to ever come back.\r\n\r\nThe User Study component allows you to directly observe new players, without their knowledge. Build an understand of where they are confused, struggling, and then engage them through in-game chat to further improve your understanding of the situation. This process can drive refinement of the game design and boost retention.\r\n\r\nSee the enclosed README for more information."
+    Description: "In the pursuit of improving your games, the ability to directly observe players is invaluable. If you ask your community what to change about the game, they will most likely tell you things that are only relevant to them, players who are later in the experience. However, the most important part of a game to improve is the onboarding of new players. They will go away without ever telling you what was wrong. Players that leave without having enjoyed the game are unlikely to ever come back.\r\n\r\nThe User Study component allows you to directly observe new players, without their knowledge. Build an understanding of where they are confused or struggling, then engage them through in-game chat to further improve your knowledge of the situation. This process can drive refinement of the game design and boost retention.\r\n\r\nSee the enclosed README for more information."
   }
   SerializationVersion: 89
   DirectlyPublished: true
